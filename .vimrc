@@ -1,10 +1,13 @@
+"Mostly borrowed from Derek Wyatt's vimrc http://www.derekwyatt.org/
 "-----------------------------------------------------------------------------
 " Global Stuff
 "-----------------------------------------------------------------------------
+
 " Set filetype stuff to on
 filetype on
 filetype plugin on
 filetype indent on
+
 
 " Tabstops are 4 spaces
 set tabstop=4
@@ -39,7 +42,7 @@ set hidden
 
 " Make the 'cw' and like commands put a $ at the end instead of just deleting
 " the text and replacing it
-set cpoptions=ces$
+"set cpoptions=ces$
 
 " Set the status line the way i like it
 set stl=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
@@ -75,7 +78,7 @@ set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
 " This is the timeout used while waiting for user input on a multi-keyed macro
 " or while just sitting and waiting for another key to be pressed measured
-" in milliseconds.
+" in millisecons.
 "
 " i.e. for the ",d" command, there is a "timeoutlen" wait period between the
 "      "," key and the "d" key.  If the "d" key isn't pressed before the
@@ -173,48 +176,12 @@ nmap <silent> ,w :set invwrap<CR>:set wrap?<CR>
 " Run the command that was just yanked
 nmap <silent> ,rc :@"<cr>
 
-" allow command line editing like emacs
-cnoremap <C-A>      <Home>
-cnoremap <C-B>      <Left>
-cnoremap <C-E>      <End>
-cnoremap <C-F>      <Right>
-cnoremap <C-N>      <End>
-cnoremap <C-P>      <Up>
-cnoremap <ESC>b     <S-Left>
-cnoremap <ESC><C-B> <S-Left>
-cnoremap <ESC>f     <S-Right>
-cnoremap <ESC><C-F> <S-Right>
-cnoremap <ESC><C-H> <C-W>
-
 " Maps to make handling windows a bit easier
-noremap <silent> ,h :wincmd h<CR>
-noremap <silent> ,j :wincmd j<CR>
-noremap <silent> ,k :wincmd k<CR>
-noremap <silent> ,l :wincmd l<CR>
-noremap <silent> ,sb :wincmd p<CR>
 noremap <silent> <C-F9>  :vertical resize -10<CR>
 noremap <silent> <C-F10> :resize +10<CR>
 noremap <silent> <C-F11> :resize -10<CR>
 noremap <silent> <C-F12> :vertical resize +10<CR>
 noremap <silent> ,s8 :vertical resize 83<CR>
-noremap <silent> ,cj :wincmd j<CR>:close<CR>
-noremap <silent> ,ck :wincmd k<CR>:close<CR>
-noremap <silent> ,ch :wincmd h<CR>:close<CR>
-noremap <silent> ,cl :wincmd l<CR>:close<CR>
-noremap <silent> ,cc :close<CR>
-noremap <silent> ,cw :cclose<CR>
-noremap <silent> ,ml <C-W>L
-noremap <silent> ,mk <C-W>K
-noremap <silent> ,mh <C-W>H
-noremap <silent> ,mj <C-W>J
-noremap <silent> <C-7> <C-W>>
-noremap <silent> <C-8> <C-W>+
-noremap <silent> <C-9> <C-W>+
-noremap <silent> <C-0> <C-W>>
-
-" Map CTRL-E to do what ',' used to do
-nnoremap <c-e> ,
-vnoremap <c-e> ,
 
 " Buffer commands
 noremap <silent> ,bd :bd<CR>
@@ -229,10 +196,10 @@ nmap <silent> <C-i> 10zh
 
 "Insert the string under the cursor to the search bar
 ":nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
-:nnoremap <Leader>s :%s/\\\<<C-r><C-w>\\\>//g<Left><Left>
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " Highlight all instances of the current word under the cursor
-nmap <silent> ^ :setl hls<CR>:let @/="<C-r><C-w>"<CR>
+"nmap <silent> ^ :setl hls<CR>:let @/="<C-r><C-w>"<CR>
 
 " Eclim mapping
 "nnoremap <silent> <buffer> <cr> :CSearchContext<cr> 
@@ -270,12 +237,6 @@ set synmaxcol=2048
 "-----------------------------------------------------------------------------
 " Yup, I don't like this one either
 let loaded_minibufexplorer = 1
-
-"-----------------------------------------------------------------------------
-" ShowMarks Plugin Stuff
-"-----------------------------------------------------------------------------
-" I don't think I like this
-let g:loaded_showmarks = 1
 
 "-----------------------------------------------------------------------------
 " Source Explorer Plugin Settings
@@ -348,8 +309,6 @@ nmap <silent> ,oJ :FSSplitBelow<CR>
 "-----------------------------------------------------------------------------
 " SnipMate Settings
 "-----------------------------------------------------------------------------
-"source ~/.vim/snippets/support_functions.vim
-"source ~/.vim/snippets/support_functions_derek.vim
 
 function! ListKnownSnippetLanguageTypes(A, L, P)
     let filesanddirs = split(globpath(g:snippets_dir, a:A . "*"), "\n")
@@ -409,7 +368,7 @@ endfunction
 
 au BufNewFile,BufRead *.mxml set filetype=mxml
 au BufNewFile,BufRead *.as set filetype=actionscript
-"
+
 au BufNewFile,BufRead *.mxml set filetype=mxml | execute "compiler ant"
 au BufNewFile,BufRead *.as set filetype=actionscript | execute "compiler ant"
 augroup derek_scons
@@ -474,6 +433,9 @@ if has("gui_running")
     "colors desert  
     colors twilight2
     set guifont=Monaco\ 11.5
+    runtime ftplugin/man.vim
+    "nmap K :Man <cword><CR>
+    "set guifont="Droid Sans Mono"\ 11
     if !exists("g:vimrcloaded")
         winpos 0 0
         if ! &diff
@@ -484,11 +446,30 @@ if has("gui_running")
         let g:vimrcloaded = 1
     endif
 endif
-:nohls
 
 " Addisu's settings
-"
+
 set autoindent
 set cindent
-let loaded_matchit = 1
+"let loaded_matchit = 1
 
+nmap <silent> ,hx :%!xxd <CR>
+nmap <silent> ,nhx :%!xxd -r <CR>
+nmap <silent> ,sb :set scb<CR>
+nmap <silent> ,x "_x
+nmap <silent> ,c cw
+
+set grepprg=ack 
+set grepformat=%f:%l:%c:%m
+
+nmap <silent> ,mt \mt
+nmap <silent> ,mh \mh
+nmap <silent> ,ma \ma
+nmap <silent> ,mm \mm
+
+let g:showmarks_enable = 1
+hi SignColumn guibg=NONE
+nmap <F6> :TlistToggle<CR>
+
+" Set the update time to 500ms so showmarks is more responsive
+set updatetime=500 
