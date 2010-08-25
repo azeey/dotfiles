@@ -3,15 +3,18 @@
 " Global Stuff
 "-----------------------------------------------------------------------------
 
+source ~/.vim/vimrc
+
 " Set filetype stuff to on
 filetype on
 filetype plugin on
 filetype indent on
 
 
-" Tabstops are 4 spaces
-set tabstop=4
-set shiftwidth=4
+" Tabstops are 3 spaces
+set tabstop=3
+set softtabstop=3
+set shiftwidth=3
 
 " Show line numbers
 set nu
@@ -133,10 +136,8 @@ set hlsearch
 set incsearch
 
 " Initial path seeding
-set path=
-set path+=/usr/local/include/**
+set path=.
 set path+=/usr/include/**
-set path+=~/code/**
 
 " Set the tags files to be the following
 set tags=./tags,tags
@@ -156,7 +157,7 @@ nmap <silent> ,n :set invhls<CR>:set hls?<CR>
 
 " put the vim directives for my file editing settings in
 nmap <silent> ,vi
-     \ ovim:set ts=4 sts=4 sw=4:<CR>vim600:fdm=marker fdl=1 fdc=0:<ESC>
+     \ ovim:set ts=3 sts=3 sw=3:<CR>vim600:fdm=marker fdl=1 fdc=0:<ESC>
 
 " Show all available VIM servers
 nmap <silent> ,ss :echo serverlist()<CR>
@@ -191,8 +192,8 @@ nmap <silent> ,ev :e $MYVIMRC<CR>
 nmap <silent> ,sv :so $MYVIMRC<CR>
 
 " Make horizontal scrolling easier
-nmap <silent> <C-o> 10zl
-nmap <silent> <C-i> 10zh
+"nmap <silent> <C-o> 10zl
+"nmap <silent> <C-i> 10zh
 
 "Insert the string under the cursor to the search bar
 ":nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
@@ -230,7 +231,7 @@ nmap <silent> ,da :exec "1," . bufnr('$') . "bd"<cr>
 set synmaxcol=2048
 
 " I don't like it when the matching parens are automatically highlighted
-"let loaded_matchparen = 1
+let loaded_matchparen = 1
 
 "-----------------------------------------------------------------------------
 " MiniBufExplorer Plugin Settings
@@ -242,7 +243,7 @@ let loaded_minibufexplorer = 1
 " Source Explorer Plugin Settings
 "-----------------------------------------------------------------------------
 " The switch of the Source Explorer
-nmap <silent> <F8> :SrcExplToggle<CR>
+nmap <silent> <F5> :SrcExplToggle<CR>
 
 " Set the height of Source Explorer window
 let g:SrcExpl_winHeight = 16
@@ -362,6 +363,20 @@ function! RunSystemCall(systemcall)
     return output
 endfunction
 
+function! PrepForSimulator()
+    %s/dev\/ttyS1/tmp\/rec0
+    %s/dev\/ttyS2/tmp\/rec1
+    %s/dev\/ttyS3/tmp\/rec2
+    %s/dev\/ttyUSB0/tmp\/rec3
+    %s/dev\/ttyUSB1/tmp\/rec4
+    %s/dev\/ttyS0/tmp\/rec5
+endfunction
+
+function! FormatCalibration()
+   %s/], /], /g
+   normal gg=G
+endfunction
+
 "-----------------------------------------------------------------------------
 " Auto commands
 "-----------------------------------------------------------------------------
@@ -433,6 +448,7 @@ if has("gui_running")
     "colors desert  
     colors twilight2
     set guifont=Monaco\ 11.5
+    "set guifont=Terminus\ 13.5
     runtime ftplugin/man.vim
     "nmap K :Man <cword><CR>
     "set guifont="Droid Sans Mono"\ 11
@@ -445,10 +461,13 @@ if has("gui_running")
         endif
         let g:vimrcloaded = 1
     endif
+ else
+    colors desert
 endif
 
 " Addisu's settings
 
+set linespace=0 " Pixels of space between lines
 set autoindent
 set cindent
 "let loaded_matchit = 1
@@ -457,7 +476,9 @@ nmap <silent> ,hx :%!xxd <CR>
 nmap <silent> ,nhx :%!xxd -r <CR>
 nmap <silent> ,sb :set scb<CR>
 nmap <silent> ,x "_x
-nmap <silent> ,c cw
+"Highlight or underline
+nmap <silent> ,c :set cursorline! <CR>
+
 
 set grepprg=ack 
 set grepformat=%f:%l:%c:%m
@@ -473,3 +494,73 @@ nmap <F6> :TlistToggle<CR>
 
 " Set the update time to 500ms so showmarks is more responsive
 set updatetime=500 
+"autocmd FileType python setlocal omnifunc=pysmell#Complete
+
+"autocmd BufNewFile,BufRead *.mxml,*.as :nmap <C-B> :!bash ~/bin/fcshcmp.sh %:p
+autocmd BufNewFile,BufRead *.mxml,*.as :nmap <C-B> :!~/bin/fcshcmp.sh %:p run
+
+nmap <S-t> <C-t>
+nmap <S-]> <C-]>
+
+"Manpageviewer extensions
+let g:manpageview_pgm_py = "pydoc"
+let g:manpageview_options_py= ";-f;-q"
+
+let g:manpageview_pgm_rb = "ri"
+let g:manpageview_options_rb= ";-f;-q"
+
+autocmd FileType python setlocal omnifunc=pysmell#Complete
+
+"Tskeleton settings
+let g:tskelUserName = "Addisu Z. Taddese"
+let g:tskelUserEmail = "addisu.taddese@ciholas.com"
+let g:tskelUserWWW = "http://www.ciholas.com"
+autocmd BufNewFile *.py TSkeletonSetup python.py
+autocmd BufNewFile *.cpp TSkeletonSetup cpp.cpp
+
+nmap <C-B> :FuzzyFinderBuffer<CR>
+
+"ConqueTerm
+let g:ConqueTerm_TERM='xterm'
+
+set tabstop=3
+set sts=3
+set shiftwidth=3
+" Display <tab>s etc...
+set list
+" Some cool display variants for tabs (which will almost certainly break if
+" your gvim/terminal is not unicode-aware).
+" If you want to make your own I recommend look up the unicode table 2500 on
+" the web (or any other that includes your desired characters).
+" Inserting the unicode character 2500 is done by pressing: Ctrl-V Ctrl-U 2500
+
+" Depending on your encoding the following lines might be broken for you, in
+" that case try to view this in utf-8 encoding or just make your own lcs
+" string as described above.
+
+
+"set lcs=tab:│\ ,trail:·,extends:>,precedes:<,nbsp:&
+"set lcs=tab:└─,trail:·,extends:>,precedes:<,nbsp:&
+set lcs=tab:│┈,trail:·,extends:>,precedes:<,nbsp:&
+" formatoptions:
+" c - autowrap COMMENTS using textwidth
+" r - insert comment leader (?) on <enter>
+" o - insert comment leader on 'o' or 'O'
+" q - gq formats comments (?)
+" n - recon numbered lists
+" v - wrap on blanks
+" t - autowrap TEXT using textwidth
+set fo=croqnvt
+
+function! SwitchSourceHeader()
+  "update!
+  if (expand ("%:t") == expand ("%:t:r") . ".cpp")
+    find %:t:r.h
+  else
+    find %:t:r.cpp
+  endif
+endfunction
+
+nmap ,h :call SwitchSourceHeader()<CR>
+
+map <F12> :!ctags -R --c++-kinds=+p --c-kinds=+p --fields=+iaS --extra=+q .<CR>
