@@ -488,8 +488,8 @@ nmap <silent> ,mh \mh
 nmap <silent> ,ma \ma
 nmap <silent> ,mm \mm
 
-let g:showmarks_enable = 1
-hi SignColumn guibg=NONE
+"let g:showmarks_enable = 1
+"hi SignColumn guibg=NONE
 nmap <F6> :TlistToggle<CR>
 
 " Set the update time to 500ms so showmarks is more responsive
