@@ -136,10 +136,8 @@ set hlsearch
 set incsearch
 
 " Initial path seeding
-set path=
-set path+=/usr/local/include/**
+set path=.
 set path+=/usr/include/**
-set path+=~/code/**
 
 " Set the tags files to be the following
 set tags=./tags,tags
@@ -233,7 +231,7 @@ nmap <silent> ,da :exec "1," . bufnr('$') . "bd"<cr>
 set synmaxcol=2048
 
 " I don't like it when the matching parens are automatically highlighted
-"let loaded_matchparen = 1
+let loaded_matchparen = 1
 
 "-----------------------------------------------------------------------------
 " MiniBufExplorer Plugin Settings
@@ -450,6 +448,7 @@ if has("gui_running")
     "colors desert  
     colors twilight2
     set guifont=Monaco\ 11.5
+    "set guifont=Terminus\ 13.5
     runtime ftplugin/man.vim
     "nmap K :Man <cword><CR>
     "set guifont="Droid Sans Mono"\ 11
@@ -462,10 +461,13 @@ if has("gui_running")
         endif
         let g:vimrcloaded = 1
     endif
+ else
+    colors desert
 endif
 
 " Addisu's settings
 
+set linespace=0 " Pixels of space between lines
 set autoindent
 set cindent
 "let loaded_matchit = 1
@@ -486,8 +488,8 @@ nmap <silent> ,mh \mh
 nmap <silent> ,ma \ma
 nmap <silent> ,mm \mm
 
-let g:showmarks_enable = 1
-hi SignColumn guibg=NONE
+"let g:showmarks_enable = 1
+"hi SignColumn guibg=NONE
 nmap <F6> :TlistToggle<CR>
 
 " Set the update time to 500ms so showmarks is more responsive
@@ -520,3 +522,49 @@ set tabstop=3
 set sts=3
 set shiftwidth=3
 
+nmap <C-B> :FuzzyFinderBuffer<CR>
+
+"ConqueTerm
+let g:ConqueTerm_TERM='xterm'
+
+set tabstop=3
+set sts=3
+set shiftwidth=3
+" Display <tab>s etc...
+set list
+" Some cool display variants for tabs (which will almost certainly break if
+" your gvim/terminal is not unicode-aware).
+" If you want to make your own I recommend look up the unicode table 2500 on
+" the web (or any other that includes your desired characters).
+" Inserting the unicode character 2500 is done by pressing: Ctrl-V Ctrl-U 2500
+
+" Depending on your encoding the following lines might be broken for you, in
+" that case try to view this in utf-8 encoding or just make your own lcs
+" string as described above.
+
+
+"set lcs=tab:│\ ,trail:·,extends:>,precedes:<,nbsp:&
+"set lcs=tab:└─,trail:·,extends:>,precedes:<,nbsp:&
+set lcs=tab:│┈,trail:·,extends:>,precedes:<,nbsp:&
+" formatoptions:
+" c - autowrap COMMENTS using textwidth
+" r - insert comment leader (?) on <enter>
+" o - insert comment leader on 'o' or 'O'
+" q - gq formats comments (?)
+" n - recon numbered lists
+" v - wrap on blanks
+" t - autowrap TEXT using textwidth
+set fo=croqnvt
+
+function! SwitchSourceHeader()
+  "update!
+  if (expand ("%:t") == expand ("%:t:r") . ".cpp")
+    find %:t:r.h
+  else
+    find %:t:r.cpp
+  endif
+endfunction
+
+nmap ,h :call SwitchSourceHeader()<CR>
+
+map <F12> :!ctags -R --c++-kinds=+p --c-kinds=+p --fields=+iaS --extra=+q .<CR>
