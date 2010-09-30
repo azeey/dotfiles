@@ -3,15 +3,18 @@
 " Global Stuff
 "-----------------------------------------------------------------------------
 
+source ~/.vim/vimrc
+
 " Set filetype stuff to on
 filetype on
 filetype plugin on
 filetype indent on
 
 
-" Tabstops are 4 spaces
-set tabstop=4
-set shiftwidth=4
+" Tabstops are 3 spaces
+set tabstop=3
+set softtabstop=3
+set shiftwidth=3
 
 " Show line numbers
 set nu
@@ -156,7 +159,7 @@ nmap <silent> ,n :set invhls<CR>:set hls?<CR>
 
 " put the vim directives for my file editing settings in
 nmap <silent> ,vi
-     \ ovim:set ts=4 sts=4 sw=4:<CR>vim600:fdm=marker fdl=1 fdc=0:<ESC>
+     \ ovim:set ts=3 sts=3 sw=3:<CR>vim600:fdm=marker fdl=1 fdc=0:<ESC>
 
 " Show all available VIM servers
 nmap <silent> ,ss :echo serverlist()<CR>
@@ -191,8 +194,8 @@ nmap <silent> ,ev :e $MYVIMRC<CR>
 nmap <silent> ,sv :so $MYVIMRC<CR>
 
 " Make horizontal scrolling easier
-nmap <silent> <C-o> 10zl
-nmap <silent> <C-i> 10zh
+"nmap <silent> <C-o> 10zl
+"nmap <silent> <C-i> 10zh
 
 "Insert the string under the cursor to the search bar
 ":nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
@@ -236,13 +239,13 @@ set synmaxcol=2048
 " MiniBufExplorer Plugin Settings
 "-----------------------------------------------------------------------------
 " Yup, I don't like this one either
-let loaded_minibufexplorer = 1
+"let loaded_minibufexplorer = 1
 
 "-----------------------------------------------------------------------------
 " Source Explorer Plugin Settings
 "-----------------------------------------------------------------------------
 " The switch of the Source Explorer
-nmap <silent> <F8> :SrcExplToggle<CR>
+nmap <silent> <F5> :SrcExplToggle<CR>
 
 " Set the height of Source Explorer window
 let g:SrcExpl_winHeight = 16
@@ -362,6 +365,20 @@ function! RunSystemCall(systemcall)
     return output
 endfunction
 
+function! PrepForSimulator()
+    %s/dev\/ttyS1/tmp\/rec0
+    %s/dev\/ttyS2/tmp\/rec1
+    %s/dev\/ttyS3/tmp\/rec2
+    %s/dev\/ttyUSB0/tmp\/rec3
+    %s/dev\/ttyUSB1/tmp\/rec4
+    %s/dev\/ttyS0/tmp\/rec5
+endfunction
+
+function! FormatCalibration()
+   %s/], /], /g
+   normal gg=G
+endfunction
+
 "-----------------------------------------------------------------------------
 " Auto commands
 "-----------------------------------------------------------------------------
@@ -457,7 +474,9 @@ nmap <silent> ,hx :%!xxd <CR>
 nmap <silent> ,nhx :%!xxd -r <CR>
 nmap <silent> ,sb :set scb<CR>
 nmap <silent> ,x "_x
-nmap <silent> ,c cw
+"Highlight or underline
+nmap <silent> ,c :set cursorline! <CR>
+
 
 set grepprg=ack 
 set grepformat=%f:%l:%c:%m
@@ -473,3 +492,31 @@ nmap <F6> :TlistToggle<CR>
 
 " Set the update time to 500ms so showmarks is more responsive
 set updatetime=500 
+"autocmd FileType python setlocal omnifunc=pysmell#Complete
+
+"autocmd BufNewFile,BufRead *.mxml,*.as :nmap <C-B> :!bash ~/bin/fcshcmp.sh %:p
+autocmd BufNewFile,BufRead *.mxml,*.as :nmap <C-B> :!~/bin/fcshcmp.sh %:p run
+
+nmap <S-t> <C-t>
+nmap <S-]> <C-]>
+
+"Manpageviewer extensions
+let g:manpageview_pgm_py = "pydoc"
+let g:manpageview_options_py= ";-f;-q"
+
+let g:manpageview_pgm_rb = "ri"
+let g:manpageview_options_rb= ";-f;-q"
+
+autocmd FileType python setlocal omnifunc=pysmell#Complete
+
+"Tskeleton settings
+let g:tskelUserName = "Addisu Z. Taddese"
+let g:tskelUserEmail = "addisu.taddese@ciholas.com"
+let g:tskelUserWWW = "http://www.ciholas.com"
+autocmd BufNewFile *.py TSkeletonSetup python.py
+autocmd BufNewFile *.cpp TSkeletonSetup cpp.cpp
+
+set tabstop=3
+set sts=3
+set shiftwidth=3
+
