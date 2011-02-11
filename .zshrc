@@ -96,12 +96,16 @@ alias jd='j -d'
 alias jl='j -l'
 alias jh='j -h'
 alias jc='j -a $(basename $(pwd))'
+alias jg='j -l | grep'
 
 alias svd='svn diff | vim -'
+alias svl='svn log | view -'
 
 #export TERM="xterm"
 
 alias	=clear
+
+alias trash=gvfs-trash
 
 #chpwd() {
 #     [[ -t 1 ]] || return
