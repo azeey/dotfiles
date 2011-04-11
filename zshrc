@@ -22,6 +22,7 @@ export ZSH_THEME="azeey"
 plugins=(git svn vi-mode command-not-found deb debian)
 
 source $ZSH/oh-my-zsh.sh
+unsetopt complete_aliases
 
 setopt EXTENDED_HISTORY		# puts timestamps in the history
 
@@ -73,6 +74,8 @@ bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
 bindkey "\e[3~" delete-char
 bindkey "\e[2~" quoted-insert
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
 bindkey "\e[5C" forward-word
 bindkey "\eOc" emacs-forward-word
 bindkey "\e[5D" backward-word
@@ -85,7 +88,7 @@ bindkey "\e[7~" beginning-of-line
 bindkey "^r" history-incremental-search-backward
 
 x() { tmux showb | xclip -selection c. }
-if [ -f "~/.jump_shell_driver" ]; then
+if [ -f ~/.jump_shell_driver ]; then
     source ~/.jump_shell_driver
 fi
 umask 007
