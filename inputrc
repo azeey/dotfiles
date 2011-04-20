@@ -1,0 +1,3 @@
+set editing-mode vi
+"jj": vi-movement-mode
+"\e.": yank-last-arg
