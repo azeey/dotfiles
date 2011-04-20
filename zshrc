@@ -25,10 +25,13 @@ source $ZSH/oh-my-zsh.sh
 unsetopt complete_aliases
 
 setopt EXTENDED_HISTORY		# puts timestamps in the history
+setopt INC_APPEND_HISTORY SHARE_HISTORY
+setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin"
+PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin"
+PAGER="less -r"
 
 
 # # --------------------------------------------------------------------
