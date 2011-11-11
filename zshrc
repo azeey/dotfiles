@@ -102,3 +102,7 @@ bindkey -M viins jj vi-cmd-mode
 bindkey -M viins '\e.' insert-last-word
 bindkey -M vicmd v edit-command-line
 
+# Actel Tools
+if [ -f ~/.actel_tools ]; then
+    source ~/.actel_tools
+fi
