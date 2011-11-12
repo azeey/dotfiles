@@ -19,7 +19,7 @@ export ZSH_THEME="azeey"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git svn vi-mode command-not-found deb debian)
+plugins=(git vi-mode command-not-found deb debian)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt complete_aliases
@@ -30,7 +30,7 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin"
+PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
 PAGER="less -r"
 
 
@@ -55,9 +55,11 @@ alias jh='j -h'
 alias jc='j -a $(basename $(pwd))'
 alias jg='j -l | grep'
 
-alias svd='svn diff | vim -'
+alias svd='svn diff | view -'
 alias svl='svn log | view -'
 alias trash=gvfs-trash
+alias v='view -'
+alias acs='apt-cache search'
 
 # Key Bindings
 bindkey "^?" backward-delete-char
