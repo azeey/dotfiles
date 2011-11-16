@@ -19,7 +19,7 @@ export ZSH_THEME="azeey"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git svn vi-mode command-not-found deb debian)
+plugins=(git svn vi-mode deb debian)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt complete_aliases
@@ -30,7 +30,7 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin"
+PATH="/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/opt/local/bin:/opt/local/sbin:/Developer/Simulator/Icarus/bin:/Developer/Simulator/GTKwave/bin:/Users/addisu/Library/Python/2.7/bin:$PATH:"
 PAGER="less -r"
 
 
@@ -38,7 +38,7 @@ PAGER="less -r"
 # # aliases
 # # --------------------------------------------------------------------
 alias ll='ls -al'
-alias ls='ls --color=auto '
+alias ls='ls -G'
 alias l='ls -CF'
 alias la='ls -al'
 alias pprox='ipython -pylab -profile prox'
