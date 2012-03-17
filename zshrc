@@ -30,9 +30,9 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
-PAGER="less -r"
-
+PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
+export PAGER="less -r"
+export EDITOR="vim"
 
 # # --------------------------------------------------------------------
 # # aliases
@@ -108,3 +108,9 @@ bindkey -M vicmd v edit-command-line
 if [ -f ~/.actel_tools ]; then
     source ~/.actel_tools
 fi
+
+# Tmuxinator
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+#RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
