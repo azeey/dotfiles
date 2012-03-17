@@ -38,7 +38,7 @@ export EDITOR="vim"
 # # aliases
 # # --------------------------------------------------------------------
 alias ll='ls -al'
-alias ls='ls --color=auto '
+alias ls='ls -G'
 alias l='ls -CF'
 alias la='ls -al'
 alias pprox='ipython -pylab -profile prox'
