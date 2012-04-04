@@ -31,8 +31,10 @@ setopt APPEND_HISTORY
 HISTSIZE=100000000
 SAVEHIST=100000000
 PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
+PATH="$PATH:/usr/avr32/bin"
 PAGER="less -r"
 
+export I586ROOT=/usr/local/x-tools/i586-ciholas-linux-gnu/i586-ciholas-linux-gnu/sysroot
 
 # # --------------------------------------------------------------------
 # # aliases
@@ -41,7 +43,7 @@ alias ll='ls -al'
 alias ls='ls --color=auto '
 alias l='ls -CF'
 alias la='ls -al'
-alias pprox='ipython -pylab -profile prox'
+alias pprox='ipython --pylab --profile=prox'
 alias minicom='minicom -o -c on'
 alias g='gvim --remote-silent'
 alias grep='grep --color=auto'
@@ -60,6 +62,8 @@ alias svl='svn log | view -'
 alias trash=gvfs-trash
 alias v='view -'
 alias acs='apt-cache search'
+alias duhm='du -h --max-depth=1'
+alias fn='find -name'
 
 # Key Bindings
 bindkey "^?" backward-delete-char
