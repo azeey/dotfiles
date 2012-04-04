@@ -40,7 +40,7 @@ export I586ROOT=/usr/local/x-tools/i586-ciholas-linux-gnu/i586-ciholas-linux-gnu
 # # aliases
 # # --------------------------------------------------------------------
 alias ll='ls -al'
-alias ls='ls --color=auto '
+alias ls='ls -G'
 alias l='ls -CF'
 alias la='ls -al'
 alias pprox='ipython --pylab --profile=prox'
