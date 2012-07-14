@@ -37,8 +37,8 @@ export EDITOR="vim"
 # # --------------------------------------------------------------------
 # # aliases
 # # --------------------------------------------------------------------
+alias ls='ls -G --color=auto'
 alias ll='ls -al'
-alias ls='ls -G'
 alias l='ls -CF'
 alias la='ls -al'
 alias pprox='ipython -pylab -profile prox'
@@ -54,6 +54,7 @@ alias jl='j -l'
 alias jh='j -h'
 alias jc='j -a $(basename $(pwd))'
 alias jg='j -l | grep'
+alias je='editor ~/.jumprc'
 
 alias svd='svn diff | view -'
 alias svl='svn log | view -'
@@ -93,9 +94,7 @@ bindkey "\e[7~" beginning-of-line
 bindkey "^r" history-incremental-search-backward
 
 x() { tmux showb | xclip -selection c. }
-if [ -f ~/.jump_shell_driver ]; then
-    source ~/.jump_shell_driver
-fi
+source `jump-bin --zsh-integration`
 umask 007
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -114,3 +113,5 @@ fi
 
 #RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
