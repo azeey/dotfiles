@@ -1,4 +1,4 @@
-# Path to your oh-my-zsh configuration.
+    # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/dotfiles/oh-my-zsh
 
 # Set to the name theme to load.
@@ -41,7 +41,7 @@ alias ls='ls -G --color=auto'
 alias ll='ls -al'
 alias l='ls -CF'
 alias la='ls -al'
-alias pprox='ipython -pylab -profile prox'
+alias pprox='ipython --pylab --profile=prox'
 alias minicom='minicom -o -c on'
 alias g='gvim --remote-silent'
 alias grep='grep --color=auto'
@@ -61,6 +61,8 @@ alias svl='svn log | view -'
 alias trash=gvfs-trash
 alias v='view -'
 alias acs='apt-cache search'
+alias duhm='du -h --max-depth=1'
+alias fn='find -name'
 
 # Key Bindings
 bindkey "^?" backward-delete-char
