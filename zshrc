@@ -1,4 +1,4 @@
-# Path to your oh-my-zsh configuration.
+    # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/dotfiles/oh-my-zsh
 
 # Set to the name theme to load.
@@ -30,17 +30,15 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
-PATH="$PATH:/usr/avr32/bin"
-PAGER="less -r"
-
-export I586ROOT=/usr/local/x-tools/i586-ciholas-linux-gnu/i586-ciholas-linux-gnu/sysroot
+PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
+export PAGER="less -r"
+export EDITOR="vim"
 
 # # --------------------------------------------------------------------
 # # aliases
 # # --------------------------------------------------------------------
+alias ls='ls -G --color=auto'
 alias ll='ls -al'
-alias ls='ls -G'
 alias l='ls -CF'
 alias la='ls -al'
 alias pprox='ipython --pylab --profile=prox'
@@ -56,6 +54,7 @@ alias jl='j -l'
 alias jh='j -h'
 alias jc='j -a $(basename $(pwd))'
 alias jg='j -l | grep'
+alias je='editor ~/.jumprc'
 
 alias svd='svn diff | view -'
 alias svl='svn log | view -'
@@ -97,9 +96,7 @@ bindkey "\e[7~" beginning-of-line
 bindkey "^r" history-incremental-search-backward
 
 x() { tmux showb | xclip -selection c. }
-if [ -f ~/.jump_shell_driver ]; then
-    source ~/.jump_shell_driver
-fi
+source `jump-bin --zsh-integration`
 umask 007
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -112,3 +109,11 @@ bindkey -M vicmd v edit-command-line
 if [ -f ~/.actel_tools ]; then
     source ~/.actel_tools
 fi
+
+# Tmuxinator
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+#RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
