@@ -96,7 +96,6 @@ bindkey "\e[7~" beginning-of-line
 bindkey "^r" history-incremental-search-backward
 
 x() { tmux showb | xclip -selection c. }
-source `jump-bin --zsh-integration`
 umask 007
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -117,3 +116,4 @@ fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+source `jump-bin --zsh-integration`
