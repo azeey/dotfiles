@@ -31,16 +31,21 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
-export PATH="$PATH:$HOME/.gem/ruby/1.8/bin"
+PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin:$HOME/.local/bin"
+export CIHOLAS_SVN_UTILS=/home/addisu/opt/ciholas/svn-utils
+export PATH=$PATH:$CIHOLAS_SVN_UTILS
 export PAGER="less -r"
 export EDITOR="vim"
 
 # # --------------------------------------------------------------------
 # # aliases
 # # --------------------------------------------------------------------
-alias ls='ls -G --color=auto'
+if [ $OSTYPE = "linux-gnu" ]; then
+    alias ls='ls --color=auto'
+else
+    alias ls='ls -G'
+fi
+
 alias ll='ls -al'
 alias l='ls -CF'
 alias la='ls -al'
