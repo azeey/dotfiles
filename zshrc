@@ -61,6 +61,7 @@ alias svl='svn log | view -'
 alias trash=gvfs-trash
 alias v='view -'
 alias acs='apt-cache search'
+alias av='apt-cache show'
 alias duhm='du -h --max-depth=1'
 alias fn='find -name'
 
