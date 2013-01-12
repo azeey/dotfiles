@@ -64,6 +64,7 @@ alias acs='apt-cache search'
 alias av='apt-cache show'
 alias duhm='du -h --max-depth=1'
 alias fn='find -name'
+#alias tmux='tmux -2'
 
 # Key Bindings
 bindkey "^?" backward-delete-char
@@ -97,7 +98,7 @@ bindkey "\e[7~" beginning-of-line
 bindkey "^r" history-incremental-search-backward
 
 x() { tmux showb | xclip -selection c. }
-umask 007
+#umask 007
 autoload -U edit-command-line
 zle -N edit-command-line
 
