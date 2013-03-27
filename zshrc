@@ -9,18 +9,19 @@ export ZSH_THEME="azeey"
 # export CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
-# export DISABLE_AUTO_UPDATE="true"
+export DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want to disable colors in ls
 # export DISABLE_LS_COLORS="true"
 
 # Uncomment following line if you want to disable autosetting terminal title.
-# export DISABLE_AUTO_TITLE="true"
+export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git vi-mode command-not-found deb debian)
 
+export apt_pref='apt-get'
 source $ZSH/oh-my-zsh.sh
 unsetopt complete_aliases
 
@@ -30,7 +31,9 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin"
+export PATH="$PATH:$HOME/.gem/ruby/1.8/bin"
 export PAGER="less -r"
 export EDITOR="vim"
 
@@ -65,6 +68,7 @@ alias av='apt-cache show'
 alias duhm='du -h --max-depth=1'
 alias fn='find -name'
 #alias tmux='tmux -2'
+alias ack='ack-grep'
 
 # Key Bindings
 bindkey "^?" backward-delete-char
@@ -119,3 +123,7 @@ fi
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 source `jump-bin --zsh-integration`
+
+# ROS
+source $HOME/ros_workspace/setup.zsh
+export ROS_WORKSPACE=~/ros_workspace
