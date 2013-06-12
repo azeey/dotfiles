@@ -74,6 +74,8 @@ alias duhm='du -h --max-depth=1'
 alias fn='find -name'
 #alias tmux='tmux -2'
 alias ack='ack-grep'
+# Fix gvim unity global menu issue
+#alias gvim='UBUNTU_MENUPROXY= gvim'
 
 # Key Bindings
 bindkey "^?" backward-delete-char
@@ -120,14 +122,15 @@ if [ -f ~/.actel_tools ]; then
     source ~/.actel_tools
 fi
 
+source `jump-bin --zsh-integration`
+
 # Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
 #RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-source `jump-bin --zsh-integration`
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # ROS
 source $HOME/ros_workspace/setup.zsh
@@ -137,3 +140,14 @@ export ROS_WORKSPACE=~/ros_workspace
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
+
+# Environment setup for TinyOS
+
+export TOSROOT="$HOME/code/tinyos-pillforge"
+export TOSDIR="$TOSROOT/tos"
+export CLASSPATH=$CLASSPATH:$TOSROOT/support/sdk/java/tinyos.jar:.
+export MAKERULES="$TOSROOT/support/make/Makerules"
+export PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python
+
+# Using Stow now
+export PATH=$PATH:/opt/bin
