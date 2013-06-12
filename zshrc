@@ -132,3 +132,8 @@ source `jump-bin --zsh-integration`
 # ROS
 source $HOME/ros_workspace/setup.zsh
 export ROS_WORKSPACE=~/ros_workspace
+
+# Dircolors
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
