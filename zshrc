@@ -122,7 +122,6 @@ if [ -f ~/.actel_tools ]; then
     source ~/.actel_tools
 fi
 
-source `jump-bin --zsh-integration`
 
 # Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
@@ -131,6 +130,8 @@ source `jump-bin --zsh-integration`
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+source `jump-bin --zsh-integration`
 
 # ROS
 source $HOME/ros_workspace/setup.zsh
