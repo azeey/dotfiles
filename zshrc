@@ -76,6 +76,7 @@ alias fn='find -name'
 alias ack='ack-grep'
 # Fix gvim unity global menu issue
 #alias gvim='UBUNTU_MENUPROXY= gvim'
+alias gvim='vim -g'
 
 # Key Bindings
 bindkey "^?" backward-delete-char
@@ -134,8 +135,10 @@ export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 source `jump-bin --zsh-integration`
 
 # ROS
-source $HOME/ros_workspace/setup.zsh
-export ROS_WORKSPACE=~/ros_workspace
+if [ -x $HOME/ros_workspace ]; then
+    source $HOME/ros_workspace/setup.zsh
+    export ROS_WORKSPACE=~/ros_workspace
+fi
 
 # Dircolors
 if [ -x /usr/bin/dircolors ]; then
