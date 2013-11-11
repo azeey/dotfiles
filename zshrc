@@ -31,9 +31,7 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:/usr/local/x-tools/i586-ciholas-linux-gnu/bin:$HOME/.local/bin"
-export CIHOLAS_SVN_UTILS=/home/addisu/opt/ciholas/svn-utils
-export PATH=$PATH:$CIHOLAS_SVN_UTILS
+PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:$HOME/.local/bin"
 export PAGER="less -r"
 export EDITOR="vim"
 
@@ -76,8 +74,8 @@ alias fn='find -name'
 alias ack='ack-grep'
 # Fix gvim unity global menu issue
 #alias gvim='UBUNTU_MENUPROXY= gvim'
-alias gvim='vim -g'
-
+#alias gvim='vim -g'
+#alias node='env NODE_NO_READLINE=1 rlwrap -a -A -pGreen -S "node >>> " node'
 # Key Bindings
 bindkey "^?" backward-delete-char
 bindkey '^[OH' beginning-of-line
@@ -155,3 +153,9 @@ export PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python
 
 # Using Stow now
 export PATH=$PATH:/opt/bin
+
+# Jsctags
+NODE_PATH='/usr/local/lib/jsctags:${NODE_PATH}'
+
+# Cabal
+export PATH=$PATH:$HOME/.cabal/bin
