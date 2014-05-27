@@ -31,7 +31,7 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/usr/local/flex_sdk_3/bin/:/usr/local/gnuarm/bin:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/opt/drbl/sbin:/opt/drbl/bin:/usr/local/cuda/bin:$HOME/.local/bin"
+PATH="$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/usr/local/cuda/bin:$HOME/.local/bin:$HOME/CodeSourcer/Sourcery_G++_Lite/bin"
 export PAGER="less -r"
 export EDITOR="vim"
 
@@ -48,6 +48,7 @@ alias ll='ls -al'
 alias l='ls -CF'
 alias la='ls -al'
 alias pprox='ipython --pylab --profile=prox'
+alias pylab='ipython --pylab --profile=pylab'
 alias minicom='minicom -o -c on'
 alias g='gvim --remote-silent'
 alias grep='grep --color=auto'
@@ -67,8 +68,10 @@ alias svl='svn log | view -'
 alias trash=gvfs-trash
 alias v='view -'
 alias acs='apt-cache search'
+alias agr='sudo apt-get upgrade'
 alias av='apt-cache show'
-alias duhm='du -h --max-depth=1'
+alias duhm='du -h --max-depth=1 | sort -h'
+alias duhs='du -hs * | sort -h'
 alias fn='find -name'
 #alias tmux='tmux -2'
 alias ack='ack-grep'
@@ -76,6 +79,10 @@ alias ack='ack-grep'
 #alias gvim='UBUNTU_MENUPROXY= gvim'
 #alias gvim='vim -g'
 #alias node='env NODE_NO_READLINE=1 rlwrap -a -A -pGreen -S "node >>> " node'
+unalias ag # Silversearcher
+
+
+
 # Key Bindings
 bindkey "^?" backward-delete-char
 bindkey '^[OH' beginning-of-line
@@ -159,3 +166,51 @@ NODE_PATH='/usr/local/lib/jsctags:${NODE_PATH}'
 
 # Cabal
 export PATH=$PATH:$HOME/.cabal/bin
+
+#http://justin.abrah.ms/dotfiles/zsh.html
+psgrep() {
+    if [ ! -z $1 ] ; then
+        ps aux | grep $1 | grep -v grep
+    else
+        echo "!! Need name to grep for"
+    fi
+}
+
+wll(){
+    ll $(which $1)
+}
+
+tosdebuginit(){
+    cp $HOME/code/tinyos-pillforge/tos/chips/msp430/99_gdb/gdb_x5  .gdb_x5
+    cp $HOME/code/tinyos-pillforge/tos/chips/msp430/99_gdb/gdbinit .gdbinit
+}
+
+# z
+source $HOME/downloads/src/z/z.sh
+
+# Function to update tmux's environment variables. Very useful when using X forwarding in ssh
+#function tmux() {
+    #local tmux=$(whence -fp tmux)
+    #case "$1" in
+        #update-environment|update-env|env-update)
+            #local v
+            #while read v; do
+                #if [[ $v == -* ]]; then
+                    #unset ${v/#-/}
+                #else
+                    ## Add quotes around the argument
+                    #echo "Updating Environment"
+                    #echo $v
+                    #v=${v/=/=\"}
+                    #echo $v
+                    #v=${v/%/\"}
+                    #echo $v
+                    #eval export $v
+                #fi
+            #done < <(tmux show-environment)
+            #;;
+        #*)
+            #$tmux "$@"
+            #;;
+    #esac
+#}
