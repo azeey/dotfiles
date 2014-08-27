@@ -19,7 +19,7 @@ export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode command-not-found deb debian)
+plugins=(git vi-mode command-not-found debian extract)
 
 export apt_pref='apt-get'
 source $ZSH/oh-my-zsh.sh
@@ -114,7 +114,7 @@ bindkey "\e[8~" end-of-line
 bindkey "\e[7~" beginning-of-line
 bindkey "^r" history-incremental-search-backward
 
-x() { tmux showb | xclip -selection c. }
+xp() { tmux showb | xclip -selection c. }
 #umask 007
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -140,10 +140,10 @@ export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 source `jump-bin --zsh-integration`
 
 # ROS
-if [ -x $HOME/ros_workspace ]; then
-    source $HOME/ros_workspace/setup.zsh
-    export ROS_WORKSPACE=~/ros_workspace
-fi
+#if [ -x $HOME/ros_workspace ]; then
+#    source $HOME/ros_workspace/setup.zsh
+#    export ROS_WORKSPACE=~/ros_workspace
+#fi
 
 # Dircolors
 if [ -x /usr/bin/dircolors ]; then
