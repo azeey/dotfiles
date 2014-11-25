@@ -73,7 +73,7 @@ alias av='apt-cache show'
 alias duhm='du -h --max-depth=1 | sort -h'
 alias duhs='du -hs * | sort -h'
 alias fn='find -name'
-#alias tmux='tmux -2'
+alias tmux='tmux -2'
 alias ack='ack-grep'
 # Fix gvim unity global menu issue
 #alias gvim='UBUNTU_MENUPROXY= gvim'
@@ -140,10 +140,12 @@ export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 source `jump-bin --zsh-integration`
 
 # ROS
-#if [ -x $HOME/ros_workspace ]; then
-#    source $HOME/ros_workspace/setup.zsh
-#    export ROS_WORKSPACE=~/ros_workspace
-#fi
+if [ -x $HOME/code/catkin_ws/devel ]; then
+    source $HOME/code/catkin_ws/devel/setup.zsh
+    export ROS_WORKSPACE=$HOME/code/catkin_ws
+fi
+
+export VREP_ROOT_DIR=/opt/vrep
 
 # Dircolors
 if [ -x /usr/bin/dircolors ]; then
@@ -214,3 +216,4 @@ source $HOME/downloads/src/z/z.sh
             #;;
     #esac
 #}
+
