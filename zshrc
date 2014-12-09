@@ -31,7 +31,7 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/usr/local/cuda/bin:$HOME/.local/bin:$HOME/CodeSourcer/Sourcery_G++_Lite/bin"
+PATH="$PATH/home/addisu/bin:$HOME/.local/bin"
 export PAGER="less -r"
 export EDITOR="vim"
 
@@ -137,7 +137,6 @@ fi
 
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-source `jump-bin --zsh-integration`
 
 # ROS
 if [ -x $HOME/code/catkin_ws/devel ]; then
