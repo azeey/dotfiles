@@ -137,7 +137,7 @@ fi
 
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-source `jump-bin --zsh-integration`
+#source `jump-bin --zsh-integration`
 
 # ROS
 if [ -x $HOME/code/catkin_ws/devel ]; then
@@ -158,7 +158,7 @@ export TOSROOT="$HOME/code/tinyos-pillforge"
 export TOSDIR="$TOSROOT/tos"
 export CLASSPATH=$CLASSPATH:$TOSROOT/support/sdk/java/tinyos.jar:.
 export MAKERULES="$TOSROOT/support/make/Makerules"
-export PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python
+export PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python:$HOME/downloads/src/caffe/build/install/python
 
 # Using Stow now
 export PATH=$PATH:/opt/bin
@@ -217,3 +217,4 @@ source $HOME/downloads/src/z/z.sh
     #esac
 #}
 
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
