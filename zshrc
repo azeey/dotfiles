@@ -31,7 +31,7 @@ setopt APPEND_HISTORY
 
 HISTSIZE=100000000
 SAVEHIST=100000000
-PATH="$PATH:/var/lib/gems/1.8/bin:/var/lib/gems/1.9.1/bin:/home/addisu/bin:/usr/local/cuda/bin:$HOME/.local/bin:$HOME/CodeSourcer/Sourcery_G++_Lite/bin"
+PATH="$PATH/home/addisu/bin:$HOME/.local/bin"
 export PAGER="less -r"
 export EDITOR="vim"
 
@@ -158,7 +158,7 @@ export TOSROOT="$HOME/code/tinyos-pillforge"
 export TOSDIR="$TOSROOT/tos"
 export CLASSPATH=$CLASSPATH:$TOSROOT/support/sdk/java/tinyos.jar:.
 export MAKERULES="$TOSROOT/support/make/Makerules"
-export PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python:$HOME/downloads/src/caffe/build/install/python
+export PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python
 
 # Using Stow now
 export PATH=$PATH:/opt/bin
@@ -217,4 +217,4 @@ source $HOME/downloads/src/z/z.sh
     #esac
 #}
 
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+[[ -s /usr/share/virtualenvwrapper/virtualenvwrapper.sh ]] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
