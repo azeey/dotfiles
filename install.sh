@@ -1,25 +1,41 @@
 #!/bin/bash
+#set -v
+
 # This gist can be run with the following command. (May not always work)
 # wget https://gist.github.com/azeey/936969/raw/dotfiles_setup.sh -O- | bash
 
 DOTFILES_DIR="$HOME/dotfiles"
 GIT_URL="git://github.com/azeey/dotfiles.git"
 
-# Update repo
-sudo su <<EOF
-apt-get update
+echo "Setting up dotfiles"
+
+echo "Installing dependencies..."
+
+LIST_OF_APPS="git exuberant-ctags cscope tmux zsh python-dev python-pip neovim"
+
+# Add neovim ppa
+sudo apt-get update
+sudo apt-get install -ym software-properties-common
+
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+sudo apt-get update
+
 
 # Install Git
-apt-get install -y git-core vim exuberant-ctags cscope vim-gnome tmux zsh ruby gems python-pip
-EOF
+sudo apt-get install -y $LIST_OF_APPS; true
+
+# Use neovim as vim
+sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+sudo update-alternatives --config vi
+sudo update-alternatives --config vim
+sudo update-alternatives --config editor
+
 
 echo "Setting up dev tools from $GIT_URL"
 # Checkout from github
-git clone $GIT_URL $DOTFILES_DIR
-
-# Update submodules
-cd $DOTFILES_DIR
-git submodule update --init
+git clone --recursive $GIT_URL $DOTFILES_DIR
 
 
 function sym {
@@ -43,10 +59,11 @@ sym $DOTFILES_DIR/vim $HOME/.vim
 sym $DOTFILES_DIR/Xresources $HOME/.Xresources
 sym $DOTFILES_DIR/xprofile $HOME/.xprofile
 sym $HOME/.vim/vimrc $HOME/.vimrc
+sym $HOME/.vim $HOME/.config/nvim
 
 # Other packages
 pip install --user git+git://github.com/Lokaltog/powerline
-# gem install --user-install jump
+pip install --user neovim
 
 git clone https://github.com/Lokaltog/powerline-fonts.git /tmp/powerline-fonts
 bash /tmp/powerline-fonts/install.sh
@@ -55,10 +72,13 @@ bash /tmp/powerline-fonts/install.sh
 mkdir -p $HOME/downloads/src/
 git clone https://github.com/rupa/z.git $HOME/downloads/src/z
 
-# Install Vundle bundles
-vim +BundleInstall +qa!
 
 # Change shell
-chsh -s $(which zsh)
+sudo chsh -s $(which zsh)
+
+# Update alternatives for neovim
+
+# Install Vundle bundles
+vim +PlugInstall +qa!
 
 echo "Finished setting up dev tools.  Restart/reload shells and text editors"
