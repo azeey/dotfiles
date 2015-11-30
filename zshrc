@@ -139,10 +139,10 @@ fi
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # ROS
-#if [ -x $HOME/code/catkin_ws/devel ]; then
-#    source $HOME/code/catkin_ws/devel/setup.zsh
-#    export ROS_WORKSPACE=$HOME/code/catkin_ws
-#fi
+if [ -x $HOME/code/catkin_ws/devel ]; then
+    source $HOME/code/catkin_ws/devel/setup.zsh
+    export ROS_WORKSPACE=$HOME/code/catkin_ws
+fi
 
 export VREP_ROOT_DIR=/opt/vrep
 
