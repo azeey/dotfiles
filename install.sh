@@ -11,13 +11,14 @@ echo "Setting up dotfiles"
 
 echo "Installing dependencies..."
 
-LIST_OF_APPS="git exuberant-ctags cscope tmux zsh python-dev python-pip neovim"
+LIST_OF_APPS="git exuberant-ctags cscope tmux zsh python-dev python-pip xsel silversearcher-ag neovim"
 
 # Add neovim ppa
 sudo apt-get update
 sudo apt-get install -ym software-properties-common
 
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
+sudo add-apt-repository -y ppa:pi-rho/dev
 sudo apt-get update
 
 
