@@ -60,6 +60,7 @@ sym $DOTFILES_DIR/vim $HOME/.vim
 sym $DOTFILES_DIR/Xresources $HOME/.Xresources
 sym $DOTFILES_DIR/xprofile $HOME/.xprofile
 sym $HOME/.vim/vimrc $HOME/.vimrc
+mkdir -p $HOME/.config
 sym $HOME/.vim $HOME/.config/nvim
 
 # Other packages
