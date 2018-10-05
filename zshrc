@@ -1,9 +1,12 @@
+fpath=("$HOME/.zsh.d" $fpath)
+
 source $HOME/dotfiles/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle mercurial
 antigen bundle git
 antigen bundle heroku
 antigen bundle pip
@@ -44,11 +47,11 @@ export EDITOR="vim"
 # # --------------------------------------------------------------------
 # # aliases
 # # --------------------------------------------------------------------
-alias pylab='ipython --pylab --profile=pylab'
+alias pylab='ipython3 --pylab --profile=pylab'
 alias g='gvim --remote-silent'
 
 alias trash=gvfs-trash
-alias v='view -'
+alias v='vim -R -'
 alias agr='sudo apt-get upgrade'
 alias av='apt-cache show'
 alias duhm='du -h --max-depth=1 | sort -h'
@@ -56,9 +59,8 @@ alias duhs='du -hs * | sort -h'
 alias fn='find -name'
 #alias tmux='tmux -2'
 alias ack='ack-grep'
-unalias ag # Silversearcher
-
-
+alias vimdiff='vim -d'
+alias ag='ag --path-to-ignore ~/.ignore'
 
 # Key Bindings
 bindkey "^r" history-incremental-search-backward
@@ -76,7 +78,7 @@ bindkey -M viins '\e.' insert-last-word
 #RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-export PATH=$HOME/.rvm/bin:$PATH: # Add RVM to PATH for scripting
+export PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 
 # ROS
 if [ -x $HOME/code/catkin_ws/devel ]; then
@@ -84,23 +86,12 @@ if [ -x $HOME/code/catkin_ws/devel ]; then
     export ROS_WORKSPACE=$HOME/code/catkin_ws
 fi
 
-export VREP_ROOT_DIR=/opt/vrep
-
-## Dircolors
-#if [ -x /usr/bin/dircolors ]; then
-#    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-#fi
-
-# Environment setup for TinyOS
-
-export TOSROOT="$HOME/code/tinyos-pillforge"
-export TOSDIR="$TOSROOT/tos"
-export CLASSPATH=$CLASSPATH:$TOSROOT/support/sdk/java/tinyos.jar:.
-export MAKERULES="$TOSROOT/support/make/Makerules"
-export PYTHONPATH=$PYTHONPATH:$TOSROOT/support/sdk/python
 
 # Using Stow now
 export PATH=$PATH:/opt/bin
+
+# ccache
+export PATH=/usr/lib/ccache:$PATH
 
 #http://justin.abrah.ms/dotfiles/zsh.html
 psgrep() {
@@ -115,10 +106,46 @@ wll(){
     ll $(which $1)
 }
 
-tosdebuginit(){
-    cp $HOME/code/tinyos-pillforge/tos/chips/msp430/99_gdb/gdb_x5  .gdb_x5
-    cp $HOME/code/tinyos-pillforge/tos/chips/msp430/99_gdb/gdbinit .gdbinit
-}
-
 
 [[ -s /usr/share/virtualenvwrapper/virtualenvwrapper.sh ]] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+
+activate_anaconda(){
+    export PATH="$HOME/anaconda2/bin:$PATH"
+}
+
+# revhgpr Branch [NOTES]
+#revhgpr() {
+    #if [[ ! -z $1 ]] ; then
+
+        #if [[ ! -z $2 ]] ; then
+            #hg status --rev $1 | grep -v ^\? >> $2
+        #fi
+
+        #hg status --rev $1 -n  | grep -v ^\? | xargs vim
+    #else
+        #echo "Need branch to diff against and path to PR review file"
+    #fi
+#}
+
+# revhgpr Branch [NOTES] [hg diff command]
+revhgpr() {
+    if [[ ! -z $1 ]] ; then
+
+        if [[ ! -z $2 ]] ; then
+            if [[ ! -z $3 ]] ; then
+                hg status --change $(echo $3 | awk '{print $NF}') | grep -v ^\? >> $2
+            else
+                hg status --rev $1 | grep -v ^\? >> $2
+            fi
+        fi
+
+        if [[ ! -z $3 ]] ; then
+            vim -c "ALEDisable | DiffReview $3"
+        else
+            vim -c "ALEDisable | DiffReview hg diff -r $1"
+        fi
+    else
+        echo "Need branch to diff against and path to PR review file"
+    fi
+}
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
