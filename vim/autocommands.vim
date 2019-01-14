@@ -1,4 +1,17 @@
 " Filetype-specific -------------------------------------------------------
+" Any file - Line Return {{{
+
+" Make sure Vim returns to the same line when you reopen a file.
+" Thanks, Amit
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
+
+" }}}
 " Binary {{{
 augroup Binary
     au!
@@ -33,17 +46,9 @@ augroup END
 " }}}
 " QuickFix {{{
 
-"augroup ft_quickfix
-"    au!
-"    au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap tw=0
-"augroup END
-
-" }}}
-" Ruby {{{
-
-augroup ft_ruby
+augroup ft_quickfix
     au!
-    au Filetype ruby setlocal foldmethod=syntax
+    au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap tw=0
 augroup END
 
 " }}}
@@ -56,11 +61,6 @@ augroup ft_vim
     "au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 augroup END
 " }}}
-" Ag {{{
-
-nnoremap <leader>a :Ag<space>
-
-" }}}
 " Python {{{
 augroup ft_python
     au!
@@ -72,15 +72,6 @@ augroup ft_python
     " Use the same mapping as slimv for vim-ipython
     au Filetype python map ;s <C-s>
     au FileType python let g:ultisnips_python_style = "numpy"
-augroup END
-" }}}
-" Lisp {{{
-augroup ft_lisp
-    au!
-
-    au FileType lisp setlocal sw=2 sts=2 ts=2
-    au FileType lisp set textwidth=80
-    au Filetype lisp setlocal foldmethod=indent
 augroup END
 " }}}
 " Markdown {{{
@@ -101,8 +92,6 @@ augroup ft_pandoc
     au Filetype pandoc vmap <leader>b S-
     au Filetype pandoc set tw=120
     au Filetype pandoc nnoremap <F2>:PandocPdf<CR>:bd<CR>
-    "au Filetype pandoc PandocRegisterExecutor PdcPdf <leader>d pdf 'pandoc -V geometry:margin=1in -o %:r.pdf %%'
-    au Filetype pandoc nnoremap<silent> <leader>h :!pandoc -t html5 -Ss --mathjax -c ~/css/default.css -c %:p:h/style.css -o %:r.html % <CR><CR>
 augroup END
 " }}}
 " Latex {{{
@@ -131,20 +120,15 @@ augroup ft_launch
     au BufNewFile,BufRead *.launch set ft=xml ts=2 sts=2 sw=2
 augroup END
 " }}}
-" TinyOS (nesc) {{{
-augroup ft_nc
-    au!
-    au BufNewFile,BufRead *.nc setlocal ft=nc ts=2 sts=2 sw=2
-augroup END
-" }}}
-" Scons {{{
-augroup ft_scons
-    au!
-    au BufNewFile,BufRead SCons* setf scons
-augroup END
-"}}}
 " Restructured Text {{{
   au BufNewFile,BufRead *.rst   set filetype=pandoc
+" }}}
+" SDF (Gazebo) {{{
+augroup ft_launch
+    au!
+    au BufNewFile,BufRead *.sdf set ft=xml ts=2 sts=2 sw=2
+    au BufNewFile,BufRead *.world set ft=xml ts=2 sts=2 sw=2
+augroup END
 " }}}
 " }}}
 
