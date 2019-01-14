@@ -1,11 +1,10 @@
 ".vimrc
 "Author: Addisu Taddese
 "Source: http://github.com/azeey/dotfiles/vimrc
-"
+
 source ~/.vim/plugins.vim
 source ~/.vim/commands.vim
 source ~/.vim/settings.vim
 source ~/.vim/autocommands.vim
 source ~/.vim/mappings.vim
 source ~/.vim/spelling.vim
-"hi SignColumn guibg=NONE

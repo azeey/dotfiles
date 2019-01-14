@@ -1,6 +1,5 @@
 " Filetype-specific -------------------------------------------------------
 " Any file - Line Return {{{
-
 " Make sure Vim returns to the same line when you reopen a file.
 " Thanks, Amit
 augroup line_return
@@ -38,10 +37,10 @@ augroup ft_cpp
     au FileType cpp setlocal foldmethod=syntax sw=2 sts=2 ts=2 tw=80
     au FileType cpp let NERDSpaceDelims=1
     au FileType cpp setlocal makeprg=GCC_COLORS=\ catkin\ build\ --this
-    au FileType cpp set comments^=:///
-autocmd FileType cpp set sw=2 sts=2 ts=2
-
-
+    au FileType cpp setlocal comments^=:///
+    au FileType cpp setlocal cindent cinoptions=i-s
+    "" Follow google c++ style guide
+    au FileType cpp setlocal cinoptions=g1,h1-s,N-s
 augroup END
 " }}}
 " QuickFix {{{
@@ -58,8 +57,8 @@ augroup ft_vim
     au!
     au FileType vim setlocal foldmethod=marker
     au FileType help setlocal textwidth=78
-    "au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 augroup END
+
 " }}}
 " Python {{{
 augroup ft_python
@@ -75,12 +74,12 @@ augroup ft_python
 augroup END
 " }}}
 " Markdown {{{
-augroup ft_mkd
+augroup ft_markdown
     au!
     " Bolden a word
-  au BufNewFile,BufRead *.md   set filetype=markdown
-    au Filetype mkd let b:surround_45 = "**\r**"
-    au Filetype mkd nnoremap <leader>b ysw-
+    au BufNewFile,BufRead *.md   set filetype=markdown
+    au Filetype markdown let b:surround_45 = "**\r**"
+    au Filetype markdown nnoremap <leader>b ysw-
 augroup END
 " }}}
 " Pandoc {{{
@@ -117,17 +116,17 @@ augroup END
 " Launch (ROS) {{{
 augroup ft_launch
     au!
-    au BufNewFile,BufRead *.launch set ft=xml ts=2 sts=2 sw=2
+    au BufNewFile,BufRead *.launch setlocal ft=xml ts=2 sts=2 sw=2
 augroup END
 " }}}
 " Restructured Text {{{
-  au BufNewFile,BufRead *.rst   set filetype=pandoc
+  au BufNewFile,BufRead *.rst setlocal filetype=pandoc
 " }}}
 " SDF (Gazebo) {{{
-augroup ft_launch
+augroup ft_sdf
     au!
-    au BufNewFile,BufRead *.sdf set ft=xml ts=2 sts=2 sw=2
-    au BufNewFile,BufRead *.world set ft=xml ts=2 sts=2 sw=2
+    au BufNewFile,BufRead *.sdf setlocal ft=xml ts=2 sts=2 sw=2
+    au BufNewFile,BufRead *.world setlocal ft=xml ts=2 sts=2 sw=2
 augroup END
 " }}}
 " }}}
