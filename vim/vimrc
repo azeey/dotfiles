@@ -2,29 +2,10 @@
 "Author: Addisu Taddese
 "Source: http://github.com/azeey/dotfiles/vimrc
 "
-" Preamble ----------------------------------------------------------------{{{
-"
-"Initialize Plugged
-if !has('nvim')
-set nocompatible               " be iMproved
-endif
-filetype off                   " required!
-"}}}
-"
-call plug#begin('~/.vim_run/plugged')
 source ~/.vim/plugins.vim
-call plug#end()
-
-runtime! plugin/sensible.vim
-
-filetype plugin indent on     " required!
-"}}}
-
-source ~/.vim/mappings.vim
-source ~/.vim/options.vim
-
-
-hi SignColumn guibg=NONE
-
-"}}}
 source ~/.vim/commands.vim
+source ~/.vim/settings.vim
+source ~/.vim/autocommands.vim
+source ~/.vim/mappings.vim
+source ~/.vim/spelling.vim
+"hi SignColumn guibg=NONE

@@ -1,107 +1,96 @@
 " Plugins -----------------------------------------------------------------{{{
+call plug#begin('~/.vim_run/plugged')
 
-Plug 'sjl/badwolf'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-repeat'
-"Plug 'tpope/vim-markdown'
-"Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-eunuch'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-"Plug 'scrooloose/syntastic'
-
-Plug 'bfredl/nvim-miniyank' "YankRink alternative
-Plug 'simnalamburt/vim-mundo' "Gundo alternative
-"Plug 'vim-scripts/ShowMarks'
-"Plug 'vim-airline/vim-airline' , {'tag': 'v0.8'}
-"Plug 'vim-airline/vim-airline-themes'
-
-"" All others
-Plug 'altercation/vim-colors-solarized'
-Plug 'austintaylor/vim-commaobject'
-Plug 'vim-scripts/matchit.zip'
-" For supertab and smartinput, the order matters
-Plug 'kana/vim-smartinput'
-Plug 'cohama/vim-smartinput-endwise'
-Plug 'godlygeek/tabular'
-"Plug 'ivanov/vim-ipython'
-"Plug 'kien/ctrlp.vim'
-"Plug 'klen/python-mode'
-Plug 'Lokaltog/vim-easymotion'
-" Plug 'markabe/bufexplorer'
-Plug 'michaeljsmith/vim-indent-object'
-"Plug 'nelstrom/vim-textobj-rubyblock'
-Plug 'othree/xml.vim'
-Plug 'plasticboy/vim-markdown'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-"Plug 'Source-Explorer-srcexpl.vim'
-"Plug 'vim-pandoc/vim-pandoc'
-"Plug 'moll/vim-node'
-"Plug 'pangloss/vim-javascript'
-
-Plug 'luochen1990/rainbow'
-
-"The silver searcher
-Plug 'rking/ag.vim'
 Plug 'tpope/vim-sensible'
-Plug 'airblade/vim-gitgutter'
 
-"Testing
-Plug 'justinmk/vim-sneak'
-"Plug 'justmao945/vim-clang'
-Plug 'taketwo/vim-ros'
-"Plug 'quickfixsigns'
-"Plug 'tlib'
-"Plug 'nielsadb/df_mode.vim'
-"Plug 'jalcine/cmake.vim', {'pinned': 1} "Until I get a new version of vim with the 'uniq' function
-"Plug 'vim-pandoc/vim-pandoc-syntax'
-"Plug 'tmhedberg/SimpylFold' "Slows everything down
-
-Plug 'benekastah/neomake'
-
-Plug 'chrisbra/NrrwRgn'
-Plug 'mikewest/vimroom'
-Plug 'mmai/vim-zenmode'
-Plug 'edkolev/tmuxline.vim'
-Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-"Plug 'davidhalter/jedi-vim' " Too slow. Need async
-Plug 'junegunn/goyo.vim'
-Plug 'reedes/vim-pencil'
+" Code review - {{{
 Plug 'will133/vim-dirdiff'
-Plug 'tpope/vim-abolish'
-Plug 'w0rp/ale'
-"Plug 'vim-latex/vim-latex'
-Plug 'lervag/vimtex'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'pbogut/fzf-mru.vim'
-Plug 'ludovicchabant/vim-lawrencium'
-Plug 'mhinz/vim-signify'
-
 Plug 'lambdalisue/vim-improve-diff'
 Plug 'lambdalisue/vim-unified-diff'
 Plug 'junkblocker/patchreview-vim'
-
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
-" Color schemes
+" }}}
+" Color schemes - {{{
 Plug 'ayu-theme/ayu-vim'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'arcticicestudio/nord-vim'
-Plug 'rakr/vim-one'
-Plug 'mhartington/oceanic-next'
-Plug 'morhetz/gruvbox'
-
-
 Plug 'itchyny/lightline.vim'
+Plug 'luochen1990/rainbow'
+Plug 'edkolev/tmuxline.vim'
+" }}}
+" External commands - {{{
+Plug 'benekastah/neomake'
+Plug 'tpope/vim-dispatch'
+"Plug 'jalcine/cmake.vim', {'pinned': 1} "Until I get a new version of vim with the 'uniq' function
+" }}}
+" File manipulation - {{{
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-eunuch'
+" }}}
+" Linting and Language Server - {{{
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'w0rp/ale'
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+"Plug 'davidhalter/jedi-vim' " Too slow. Need async
+"Plug 'justmao945/vim-clang'
+" }}}
+" Misc - {{{
+" YankRink alternative
+Plug 'bfredl/nvim-miniyank'
+" Gundo alternative
+Plug 'simnalamburt/vim-mundo'
+" }}}
+" Motion - {{{
+"Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'austintaylor/vim-commaobject'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/matchit.zip'
+" }}}
+" Snippets - {{{
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+" }}}
+" Search - {{{
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
+Plug 'rking/ag.vim'
+" }}}
+" Text Editing - {{{
+Plug 'chrisbra/NrrwRgn'
+Plug 'cohama/vim-smartinput-endwise'
+Plug 'godlygeek/tabular'
+Plug 'kana/vim-smartinput'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/ReplaceWithRegister'
+" }}}
+" ROS - {{{
+Plug 'taketwo/vim-ros'
+" }}}
+" Syntax - {{{
 Plug 'jlconlin/cpp.vim'
+Plug 'othree/xml.vim'
+Plug 'plasticboy/vim-markdown'
+" }}}
+" VCS - {{{
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+Plug 'ludovicchabant/vim-lawrencium'
+" }}}
+" Writing - {{{
+Plug 'junegunn/goyo.vim'
+Plug 'reedes/vim-pencil'
+Plug 'mikewest/vimroom'
+" }}}
+
+"Plug 'nielsadb/df_mode.vim'
+call plug#end()
 
 "}}}
+
 " Plugin Settings ---------------------------------------------------------{{{
 " Line Return {{{
 
@@ -378,4 +367,4 @@ let g:lightline = {
       \ },
       \ }
 " }}}
-"}}}
+" }}}
