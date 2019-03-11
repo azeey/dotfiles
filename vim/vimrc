@@ -2,6 +2,11 @@
 "Author: Addisu Taddese
 "Source: http://github.com/azeey/dotfiles/vimrc
 
+" Leaders -----------------------------------------------------------------{{{
+let mapleader = ","
+let maplocalleader = "\\"
+"}}}
+
 source ~/.vim/plugins.vim
 source ~/.vim/commands.vim
 source ~/.vim/settings.vim

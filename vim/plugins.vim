@@ -96,6 +96,7 @@ call plug#end()
 
 nnoremap <leader>a :Ag<space>
 " Ag for the last search.
+nnoremap <leader>a :Ag<space>
 nnoremap <silent> <leader>/ :execute "Ag '" . substitute(substitute(substitute(@/, "\\\\<", "", ""), "\\\\>", "", ""), "\\\\v", "", "") . "'"<CR>
 " }}}
 " Miniyank {{{
@@ -251,7 +252,7 @@ let g:ale_cpp_clangtidy_checks=[]
 let g:ale_completion_enabled = 0
 let g:ale_command_wrapper = 'nice -n5'
 let g:ale_fixers=['trim_whitespace']
-let g:ale_fix_on_save=1
+let g:ale_fix_on_save = 1
 " }}}
 " Lightline {{{
 let g:lightline = {
@@ -331,8 +332,8 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+vmap <leader>as  <Plug>(coc-codeaction-selected)
+nmap <leader>as  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)

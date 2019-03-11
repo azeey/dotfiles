@@ -52,6 +52,9 @@ noremap <silent> ,bd :bd<CR>
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 
+"Insert the string under the cursor to the search bar
+nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+
 " Search the current file for what's currently in the search
 " register and display matches
 nnoremap <silent> <leader>gs

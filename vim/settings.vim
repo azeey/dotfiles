@@ -1,7 +1,5 @@
-" Leaders -----------------------------------------------------------------{{{
-let mapleader = ","
-let maplocalleader = "\\"
-"}}}
+" Default indentation
+set shiftwidth=2 softtabstop=2 tabstop=2
 
 " Enables 24-bit color
 set termguicolors
