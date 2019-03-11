@@ -27,13 +27,18 @@ antigen theme bhilburn/powerlevel9k powerlevel9k
 # Syntax highlighting bundle.
 # Syntax highlighting won't work with vi-mode. Disable for now
 #antigen bundle zsh-users/zsh-syntax-highlighting
+#
+# fzf-z
+antigen bundle andrewferrier/fzf-z
 
+# fzf-catkin
+antigen bundle ~/.zsh.d/fzf-catkin --no-local-clone
 # Tell antigen that you're done.
 antigen apply
 
 
 setopt complete_aliases
-export apt_pref="apt-get"
+export apt_pref="apt"
 setopt EXTENDED_HISTORY		# puts timestamps in the history
 setopt INC_APPEND_HISTORY SHARE_HISTORY
 setopt APPEND_HISTORY
@@ -43,11 +48,32 @@ SAVEHIST=100000000
 PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export PAGER="less -r"
 export EDITOR="vim"
+# Pager Colors
+default=$(tput sgr0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+purple=$(tput setaf 5)
+orange=$(tput setaf 9)
 
+# Begin blinking
+export LESS_TERMCAP_mb=$red
+# Begin bold
+export LESS_TERMCAP_md=$orange
+# End mode
+export LESS_TERMCAP_me=$default
+# End standout-mode
+export LESS_TERMCAP_se=$default
+# Begin standout-mode - info box
+export LESS_TERMCAP_so=$purple
+# End underline
+export LESS_TERMCAP_ue=$default
+# Begin underline
+export LESS_TERMCAP_us=$green
 # # --------------------------------------------------------------------
 # # aliases
 # # --------------------------------------------------------------------
-alias pylab='ipython3 --pylab --profile=pylab'
+alias pylab='ipython --pylab --profile=pylab'
+alias pylab3='ipython3 --pylab --profile=pylab'
 alias g='gvim --remote-silent'
 
 alias trash=gvfs-trash
@@ -61,6 +87,7 @@ alias fn='find -name'
 alias ack='ack-grep'
 alias vimdiff='vim -d'
 alias ag='ag --path-to-ignore ~/.ignore'
+alias gdb='gdb -q'
 
 # Key Bindings
 bindkey "^r" history-incremental-search-backward
@@ -140,12 +167,50 @@ revhgpr() {
         fi
 
         if [[ ! -z $3 ]] ; then
-            vim -c "ALEDisable | DiffReview $3"
+            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview $3"
         else
-            vim -c "ALEDisable | DiffReview hg diff -r $1"
+            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview hg diff -r $1"
         fi
     else
         echo "Need branch to diff against and path to PR review file"
     fi
 }
+
+nmmangled() {
+  if [[ ! -z $2 ]] ; then
+    spat=$(nm -C $1 | grep $2 | cut -f1 -d ' ')
+    nm $1 | grep -F $spat
+  else
+    nm $1
+  fi
+}
+
+ign-test() {
+  # get the name of project
+  builddir=$(catkin locate -b)
+  pkg=$(catkin list --this -u)
+  pushd -q $builddir/$pkg
+  make test
+  popd -q
+  #catkin build --this -iv --no-deps --make-args test
+}
+
+ign-source() {
+  source $(catkin locate -d)/setup.zsh
+}
+
+gencatkincompdb() {
+# This assumes the compile_commands.json has already been generated in the build directory
+  builddir=$(catkin locate -b)
+  pkg=$(catkin list --this -u)
+  compdb -p $builddir/$pkg list > compile_commands.json
+}
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZFZ_EXCLUDE_PATTERN="\.(git|hg)"
+export FZFZ_SUBDIR_LIMIT=10
+# This makes a big difference
+export FZFZ_EXTRA_OPTS="-e"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
