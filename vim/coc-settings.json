@@ -1,0 +1,20 @@
+{
+  "coc.preferences.diagnostic.locationlist": true,
+  "coc.preferences.timeout": 5000,
+  "coc.preferences.diagnostic.displayByAle": true,
+  "languageserver": {
+    "ccls": {
+    "command": "ccls",
+    "args": ["--log-file=/tmp/ccls.log"],
+    "filetypes": ["c", "cpp", "objc", "objcpp", "hh"],
+    "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+    "initializationOptions": {
+      "cacheDirectory": "~/.cache/ccls",
+      "index": {
+        "threads": 2,
+        "comments": 1
+      }
+    }
+  }
+  }
+}
