@@ -1,0 +1,13 @@
+BasedOnStyle: Google
+IndentWidth: 2
+---
+Language: Cpp
+AccessModifierOffset : -4
+AllowShortIfStatementsOnASingleLine : false
+AlwaysBreakTemplateDeclarations : true
+BreakBeforeBraces : Allman
+AllowShortBlocksOnASingleLine : false
+AllowShortFunctionsOnASingleLine : None
+Standard : C++11
+DerivePointerAlignment: false
+PointerAlignment: Right
