@@ -30,6 +30,7 @@ augroup ft_c
     au!
     au FileType c setlocal foldmethod=syntax
     au FileType c set sw=4 sts=4 ts=4
+    au FileType c let b:ale_fix_on_save = 1
 augroup END
 
 augroup ft_cpp
@@ -41,6 +42,7 @@ augroup ft_cpp
     au FileType cpp setlocal cindent cinoptions=i-s
     "" Follow google c++ style guide
     au FileType cpp setlocal cinoptions=g1,h1-s,N-s
+    au FileType cpp let b:ale_fix_on_save = 1
 augroup END
 " }}}
 " QuickFix {{{
