@@ -8,8 +8,6 @@ antigen use oh-my-zsh
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle mercurial
 antigen bundle git
-antigen bundle heroku
-antigen bundle pip
 antigen bundle command-not-found
 antigen bundle vi-mode
 antigen bundle extract
@@ -19,7 +17,7 @@ antigen bundle tmux
 antigen bundle debian
 antigen bundle common-aliases
 
-antigen bundle zsh-users/zsh-completions
+#antigen bundle zsh-users/zsh-completions
 
 # Load the theme.
 antigen theme bhilburn/powerlevel9k powerlevel9k
@@ -33,6 +31,10 @@ antigen bundle andrewferrier/fzf-z
 
 # fzf-catkin
 antigen bundle ~/.zsh.d/fzf-catkin --no-local-clone
+
+# fzf-colcon
+antigen bundle ~/.zsh.d/fzf-colcon --no-local-clone
+
 # Tell antigen that you're done.
 antigen apply
 
@@ -88,6 +90,9 @@ alias ack='ack-grep'
 alias vimdiff='vim -d'
 alias ag='ag --path-to-ignore ~/.ignore'
 alias gdb='gdb -q'
+alias ign-gdb='gdb --args /usr/bin/ruby $(which ign)'
+alias gc="git commit -v -s"
+
 
 # Key Bindings
 bindkey "^r" history-incremental-search-backward
@@ -140,6 +145,18 @@ activate_anaconda(){
     export PATH="$HOME/anaconda2/bin:$PATH"
 }
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_COMPLETION_TRIGGER=''
+#bindkey '^T' fzf-completion
+bindkey '^I' $fzf_default_completion
+
+export FZFZ_EXCLUDE_PATTERN="\.(git|hg)"
+export FZFZ_SUBDIR_LIMIT=10
+# This makes a big difference
+export FZFZ_EXTRA_OPTS="-e"
+
 # revhgpr Branch [NOTES]
 #revhgpr() {
     #if [[ ! -z $1 ]] ; then
@@ -162,19 +179,53 @@ revhgpr() {
             if [[ ! -z $3 ]] ; then
                 hg status --change $(echo $3 | awk '{print $NF}') | grep -v ^\? >> $2
             else
-                hg status --rev $1 | grep -v ^\? >> $2
+                hg diff --stat --rev "ancestor($1,.)"  >> $2
             fi
         fi
 
         if [[ ! -z $3 ]] ; then
             vim -c "ALEDisable | set diffopt-=iwhite | DiffReview $3"
         else
-            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview hg diff -r $1"
+            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview hg diff --rev ancestor($1,.) "
         fi
     else
         echo "Need branch to diff against and path to PR review file"
     fi
 }
+
+# Setup revhgpr to use mercurial branch completion
+compdef "_hg_cmd_update -r" revhgpr
+ _fzf_complete_revhgpr() {
+  _fzf_complete "--no-sort" "$@" < <( { hg branches -q})
+ }
+
+revgitpr() {
+    if [[ ! -z $1 ]] ; then
+
+        if [[ ! -z $2 ]] ; then
+            if [[ ! -z $3 ]] ; then
+                #hg status --change $(echo $3 | awk '{print $NF}') | grep -v ^\? >> $2
+            else
+                git diff --name-status $1... >> $2
+            fi
+        fi
+
+        if [[ ! -z $3 ]] ; then
+            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview $3"
+        else
+            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview git diff $1..."
+        fi
+    else
+        echo "Need branch to diff against and path to PR review file"
+    fi
+}
+
+# Setup revgitpr to use git branch completion
+#compdef "_hg_cmd_update -r" revhgpr
+# _fzf_complete_revhgpr() {
+#  _fzf_complete "--no-sort" "$@" < <( { hg branches -q})
+# }
+
 
 nmmangled() {
   if [[ ! -z $2 ]] ; then
@@ -201,16 +252,75 @@ ign-source() {
 
 gencatkincompdb() {
 # This assumes the compile_commands.json has already been generated in the build directory
-  builddir=$(catkin locate -b)
-  pkg=$(catkin list --this -u)
-  compdb -p $builddir/$pkg list > compile_commands.json
+  local build_dir=$(catkin locate -b)
+  local pkg=$(catkin list --this -u)
+  compdb -p $build_dir/$pkg list > compile_commands.json
 }
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export FZFZ_EXCLUDE_PATTERN="\.(git|hg)"
-export FZFZ_SUBDIR_LIMIT=10
-# This makes a big difference
-export FZFZ_EXTRA_OPTS="-e"
+_find_colcon_root_dir(){
+  # Look for build/.built_by while crawling up each directory
+  local curDir=$PWD
+  local rc=1;
+  while true
+  do
+    if [[ -d "$curDir/build" && -e "$curDir/build/.built_by" ]] then
+      local built_by=$(cat $curDir/build/.built_by)
+      if [[ $built_by == "colcon" ]] then
+        echo "$curDir"
+        rc=0
+        break
+      fi
+    elif [[ $curDir == "/" ]] then
+      break
+    else
+      curDir=$(dirname $curDir)
+    fi
+  done
+  return $rc
+}
+gencolconcompdb() {
+  local curDir=$PWD
+  local root_dir=$(_find_colcon_root_dir)
+  if [[ $? -eq 0 ]] then
+    pushd -q $root_dir
+    local pkg=$(colcon list -n --paths $curDir)
+    local pkg_build_dir="$root_dir/build/$pkg"
+    pushd -q $pkg_build_dir
+    if [[ ! -e 'compile_commands.json' ]] then
+      cmake . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    fi
+    compdb -p . list > $curDir/compile_commands.json
+    popd -q
+    popd -q
+  fi
+}
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export DEBEMAIL="addisu@openrobotics.org"
+export DEBFULLNAME="Addizu Z. Taddese"
+
+zle -N fzf-catkin-dir-widget
+bindkey -M viins -r '^B'
+bindkey -M vicmd -r '^B'
+bindkey -M emacs -r '^B'
+
+bindkey -M viins '^B' fzf-catkin-dir-widget
+bindkey -M vicmd '^B' fzf-catkin-dir-widget
+bindkey -M emacs '^B' fzf-catkin-dir-widget
+
+zle -N fzf-colcon-dir-widget
+bindkey -M viins -r '^F'
+bindkey -M vicmd -r '^F'
+bindkey -M emacs -r '^F'
+
+bindkey -M viins '^F' fzf-colcon-dir-widget
+bindkey -M vicmd '^F' fzf-colcon-dir-widget
+bindkey -M emacs '^F' fzf-colcon-dir-widget
+
