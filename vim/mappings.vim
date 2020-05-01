@@ -14,8 +14,8 @@ nnoremap <leader>e :echo system("date +%c -u -d @" . <C-r><C-w><del><del><del>)<
 nnoremap <leader>ec :echo system("date +%c -d @" . <C-r><C-w>)<CR>
 
 " Don't move on *
-nnoremap * *<c-o>
-nnoremap g* g*<c-o>
+" nnoremap * *<c-o>
+" nnoremap g* g*<c-o>
 " Keep search matches in the middle of the window.
 "nnoremap n nzzzv
 "nnoremap N Nzzzv
@@ -95,5 +95,5 @@ noremap <silent> <F12> :Ctag '.'<CR>
 nnoremap <C-L> :nohls<CR><C-L>
 inoremap <C-L> <C-O>:nohls<CR>
 
-vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
-vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+" vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+" vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>

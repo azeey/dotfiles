@@ -57,36 +57,47 @@ Plug 'rking/ag.vim'
 " }}}
 " Text Editing - {{{
 Plug 'chrisbra/NrrwRgn'
-Plug 'cohama/vim-smartinput-endwise'
+"Plug 'cohama/vim-smartinput-endwise'
 Plug 'godlygeek/tabular'
-Plug 'kana/vim-smartinput'
+"Plug 'kana/vim-smartinput'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'jiangmiao/auto-pairs'
+" Plug 'junegunn/vim-slash'
 " }}}
 " ROS - {{{
 Plug 'taketwo/vim-ros'
 " }}}
 " Syntax - {{{
 Plug 'jlconlin/cpp.vim'
-Plug 'othree/xml.vim'
+"Plug 'othree/xml.vim'
 Plug 'plasticboy/vim-markdown'
 " }}}
 " VCS - {{{
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
+"Plug 'mhinz/vim-signify'
 Plug 'ludovicchabant/vim-lawrencium'
 " }}}
 " Writing - {{{
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
 Plug 'mikewest/vimroom'
+Plug 'junegunn/vim-journal'
 " }}}
-
+" Evaluating Plugins {{{
+"
 "Plug 'nielsadb/df_mode.vim'
+Plug 'calviken/vim-gdscript3'
+Plug 'tommcdo/vim-exchange'
+Plug 'PeterRincker/vim-argumentative'
+Plug 'tpope/vim-rsi'
+Plug 'peterhoeg/vim-qml'
+" Plug 'Yggdroot/indentLine'
+" }}}
 call plug#end()
 
 "}}}
@@ -167,9 +178,8 @@ let g:tex_flavor = 'latex'
 " }}}
 " Vim-Pencil {{{
 let g:pencil#conceallevel = 0
-" }}}
-" Vim-Pencil {{{
 let g:rainbow_active = 1
+let g:pencil#textwidth = 79
 " }}}
 " FzF {{{
 " Mapping selecting mappings
@@ -235,6 +245,25 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+" Using floating windows of Neovim to start fzf
+if has('nvim')
+  let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
+
+  function! FloatingFZF()
+    let width = float2nr(&columns * 0.9)
+    let height = float2nr(&lines * 0.6)
+    let opts = { 'relative': 'editor',
+               \ 'row': (&lines - height) / 2,
+               \ 'col': (&columns - width) / 2,
+               \ 'width': width,
+               \ 'height': height }
+
+    let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
+  endfunction
+
+  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+endif
 " }}}
 " C-Support {{{
 let g:C_UseTool_cmake    = 'yes'
@@ -244,15 +273,20 @@ let g:C_UseTool_doxygen  = 'yes'
 let g:signify_vcs_list = [ 'hg' ]
 " }}}
 " ALE {{{
-let g:ale_c_parse_compile_commands = 0
+let g:ale_c_parse_compile_commands = 1
+let g:ale_c_parse_makefile = 0
 " let g:ale_c_build_dir_names = []
 "let g:ale_linters_ignore = {'cpp': ['cppcheck', 'flawfinder', 'cquery', 'clangtidy']}
-let g:ale_linters= {'cpp': ['clangtidy']}
+" let g:ale_linters= {'cpp': ['clangtidy']}
+let g:ale_linters= {'cpp': []}
+" let g:ale_linters= {'cpp': ['ccls']}
 let g:ale_cpp_clangtidy_checks=[]
 let g:ale_completion_enabled = 0
 let g:ale_command_wrapper = 'nice -n5'
 let g:ale_fixers=['trim_whitespace']
-let g:ale_fix_on_save = 1
+command! ALEToggleFixer execute "let g:ale_fix_on_save = get(g:, 'ale_fix_on_save', 0) ? 0 : 1"
+" This is set in the autocommand for cpp files
+"let g:ale_fix_on_save = 1
 " }}}
 " Lightline {{{
 let g:lightline = {
@@ -260,10 +294,6 @@ let g:lightline = {
       \ }
 "}}}
 " Coc {{{
-" Unimpaired {{{
-nmap <Left>l [l
-nmap <Right>l ]l
-"}}}
 " if hidden not set, TextEdit might fail.
 set hidden
 
@@ -298,6 +328,9 @@ nmap <silent> ]v <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
+nmap <localleader>r <Plug>(coc-references)
+nmap <localleader>d <Plug>(coc-declaration)
+
 
 " TODO: gr is used by ReplaceWithRegister.
 " nmap <silent> gr <Plug>(coc-references)
@@ -356,5 +389,22 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
       \ }
+" }}}
+" Unimpaired {{{
+nmap <Left>l [l
+nmap <Right>l ]l
+" }}}
+" vim-dirdiff {{{
+nnoremap ]j :DirDiffNext<cr>
+nnoremap ]k :DirDiffPrev<cr>
+" }}}
+" vim-markdown {{{
+" vim-markdown's ]c mapping conflicts with the builtin mapping for navigating 
+" in diff mode
+map <localleader>c <Plug>Markdown_MoveToCurHeader
+" }}}
+" indentLine {{{
+let g:indentLine_setColors = 0
+let g:indentLine_char = '┊'
 " }}}
 " }}}

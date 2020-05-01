@@ -6,6 +6,7 @@ set termguicolors
 
 " Set color schome
 colorscheme ayu
+hi Search cterm=bold ctermfg=235 ctermbg=176 gui=bold guifg=#282c34 guibg=#c678dd
 
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=100
