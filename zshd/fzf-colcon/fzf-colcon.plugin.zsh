@@ -16,14 +16,35 @@ else
     REVERSER='tac'
 fi
 
-FZFCATKIN_EXCLUDE_PATTERN=${FZFCATKIN_EXCLUDE_PATTERN:="\/.hg"}
-FZFCATKIN_EXTRA_OPTS=${FZFCATKIN_EXTRA_OPTS:=""}
-FZFCATKIN_UNIQUIFIER="awk '!seen[\$0]++'"
+FZFCOLCON_EXCLUDE_PATTERN=${FZFCOLCON_EXCLUDE_PATTERN:="\/.hg"}
+FZFCOLCON_EXTRA_OPTS=${FZFCOLCON_EXTRA_OPTS:=""}
+FZFCOLCON_UNIQUIFIER="awk '!seen[\$0]++'"
 
 FIND_PREFIX="find "
 FIND_POSTFIX=" -type d"
 
-__fzfcatkin() {
+__fzf_find_colcon_root_dir(){
+  # Look for build/.built_by while crawling up each directory
+  local curDir=$PWD
+  local rc=1;
+  while true
+  do
+    if [[ -d "$curDir/build" && -e "$curDir/build/.built_by" ]] then
+      local built_by=$(cat $curDir/build/.built_by)
+      if [[ $built_by == "colcon" ]] then
+        echo "$curDir"
+        rc=0
+        break
+      fi
+    elif [[ $curDir == "/" ]] then
+      break
+    else
+      curDir=$(dirname $curDir)
+    fi
+  done
+  return $rc
+}
+__fzfcolcon() {
     if (($+FZFZ_EXCLUDE_PATTERN)); then
         EXCLUDER="egrep -v '$FZFZ_EXCLUDE_PATTERN'"
     else
@@ -34,16 +55,16 @@ __fzfcatkin() {
     # `z`). That improvements performance, and makes sure that the
     # FZFZ_SUBDIR_LIMIT is applied on the post-excluded list.
 
-    FZFCATKIN_SUBDIR_LIMIT=${FZFCATKIN_SUBDIR_LIMIT:=50}
+    FZFCOLCON_SUBDIR_LIMIT=${FZFCOLCON_SUBDIR_LIMIT:=50}
 
-    ROOTDIR="$(catkin locate)"
+    ROOTDIR="$(__fzf_find_colcon_root_dir)"
     REMOVE_FIRST="tail -n +2"
-    LIMIT_LENGTH="head -n $(($FZFCATKIN_SUBDIR_LIMIT+1))"
+    LIMIT_LENGTH="head -n $(($FZFCOLCON_SUBDIR_LIMIT+1))"
 
     SUBDIRS="{ $FIND_PREFIX $ROOTDIR/src $FIND_POSTFIX | $EXCLUDER }"
-    PKGS=($(catkin list -u))
-    CATKINDIRS=(build devel install)
-    EXTRADIRS='{ print -l $ROOTDIR/${^CATKINDIRS}/${^PKGS} }'
+    PKGS=($(colcon list -n --base-path $ROOTDIR))
+    COLCONDIRS=(build install)
+    EXTRADIRS='{ print -l $ROOTDIR/${^COLCONDIRS}/${^PKGS} }'
     eval $EXTRADIRS
 
     FZF_COMMAND="fzf --height ${FZF_TMUX_HEIGHT:-40%} --tiebreak=end,index -m --preview='$PREVIEW_COMMAND | head -\$LINES'"
@@ -56,17 +77,17 @@ __fzfcatkin() {
     echo
 }
 
-__fzfcatkintargets() {
-    ROOTDIR="$(catkin locate)"
-    PKGS=($(catkin list -u))
-    TARGETDIRS=(src build devel)
-    CATKINTOPDIRS='{ print -l $ROOTDIR/${^TARGETDIRS} }'
-    CATKINPKGDIRS='{ print -l $ROOTDIR/${^TARGETDIRS}/${^PKGS} }'
+__fzfcolcontargets() {
+    ROOTDIR="$(__fzf_find_colcon_root_dir)"
+    PKGS=($(colcon list -n --base-path $ROOTDIR))
+    TARGETDIRS=(src build install)
+    COLCONTOPDIRS='{ print -l $ROOTDIR/${^TARGETDIRS} }'
+    COLCONPKGDIRS='{ print -l $ROOTDIR/${^TARGETDIRS}/${^PKGS} }'
 
     RECENTLY_USED_DIRS="{ z -l $ROOTDIR/ | $REVERSER | sed 's/^[[:digit:].]*[[:space:]]*//' }"
     FZF_COMMAND="fzf --height ${FZF_TMUX_HEIGHT:-40%} --tiebreak=end,index -m"
 
-    local COMMAND="{ $CATKINTOPDIRS; $CATKINPKGDIRS; $RECENTLY_USED_DIRS; } | $FZFCATKIN_UNIQUIFIER | $FZF_COMMAND"
+    local COMMAND="{ $COLCONTOPDIRS; $COLCONPKGDIRS; $RECENTLY_USED_DIRS; } | $FZFCOLCON_UNIQUIFIER | $FZF_COMMAND"
 
     eval "$COMMAND" | while read item; do
         printf '%q ' "$item"
@@ -74,10 +95,11 @@ __fzfcatkintargets() {
     echo
 }
 
-fzf-catkin-dir-widget() {
-    LBUFFER="${LBUFFER}$(__fzfcatkintargets)"
+fzf-colcon-dir-widget() {
+    LBUFFER="${LBUFFER}$(__fzfcolcontargets)"
     local ret=$?
     zle redisplay
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
+
