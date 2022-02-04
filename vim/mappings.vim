@@ -97,3 +97,9 @@ inoremap <C-L> <C-O>:nohls<CR>
 
 " vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
 " vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+"
+" clang-format {{{
+" Use this to format with my fork of clang-format
+map <localleader>f :py3f /data/code/llvm/tools/clang/tools/clang-format/clang-format.py<cr>
+let g:clang_format_path="/data/code/llvm/Release/bin/clang-format"
+"}}}

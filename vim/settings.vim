@@ -1,15 +1,42 @@
 " Default indentation
 set shiftwidth=2 softtabstop=2 tabstop=2
 
-" Enables 24-bit color
-set termguicolors
+" Set color scheme {{{
+if has('termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
-" Set color schome
-colorscheme ayu
-hi Search cterm=bold ctermfg=235 ctermbg=176 gui=bold guifg=#282c34 guibg=#c678dd
+let g:sonokai_style = 'andromeda'
+let g:sonokai_enable_italic = 0
+let g:sonokai_disable_italic_comment = 1
+let g:sonokai_transparent_background = 0
+
+function! s:sonokai_custom() abort
+  let l:configuration = sonokai#get_configuration()
+  let l:palette = sonokai#get_palette(l:configuration.style)
+  call sonokai#highlight('DiffDelete', l:palette.diff_red, l:palette.diff_red)
+endfunction
+
+augroup SonokaiCustom
+  autocmd!
+  autocmd ColorScheme sonokai call s:sonokai_custom()
+augroup END
+colorscheme sonokai
+
+let g:lightline.colorscheme = 'sonokai'
+" When treesitter has a parsing error, it sets TSError on every line which 
+" causes every line to be underlined, so we clear the highlight group here.
+hi clear TSError
+
+" hi Search cterm=bold ctermfg=235 ctermbg=176 gui=bold guifg=#282c34 guibg=#c678dd
+" hi! DiffAdd   cterm=NONE gui=NONE guifg=NONE ctermfg=NONE  term=NONE 
+" }}}
+"
 
 " Don't try to highlight lines longer than 800 characters.
-set synmaxcol=100
+set synmaxcol=800
 
 " Don't wrap lines by default
 set nowrap
@@ -38,7 +65,7 @@ set smartcase
 set undofile
 
 " Location of undo files
-set undodir=~/.vim_run/tmp/undo//
+set undodir=~/.vim_run/tmp/undo/
 
 " No need for swap file
 set noswapfile
@@ -63,8 +90,7 @@ set formatoptions=crqnvtw
 " Use clipboard
 set clipboard=unnamedplus
 
-" Don't read modelines (I don't use them)
-set modelines=0
+set modeline
 
 " Turn tabs into spaces
 set expandtab
@@ -72,9 +98,12 @@ set expandtab
 " Set the tags files to be the following
 set tags=./tags,tags,~/tags
 
+" Diffs
+set diffopt& diffopt+=algorithm:histogram,indent-heuristic
+
 " Folding -----------------------------------------------------------------{{{
 
-set foldlevelstart=0
+" set foldlevelstart=0
 
 " Space to toggle folds.
 nnoremap <Space> za
@@ -87,21 +116,21 @@ nnoremap <leader>z zMzvzz
 " cursor happens to be.
 nnoremap zO zCzO
 
-function! MyFoldText() " {{{
-    let line = getline(v:foldstart)
+ function! MyFoldText() " {{{
+     let line = getline(v:foldstart)
 
-    let nucolwidth = &fdc + &number * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
+     let nucolwidth = &fdc + &number * &numberwidth
+     let windowwidth = winwidth(0) - nucolwidth - 3
+     let foldedlinecount = v:foldend - v:foldstart
 
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
+     " expand tabs into spaces
+     let onetab = strpart('          ', 0, &tabstop)
+     let line = substitute(line, '\t', onetab, 'g')
 
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
-endfunction " }}}
-set foldtext=MyFoldText()
+     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+     let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+     return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+ endfunction " }}}
+ set foldtext=MyFoldText()
 
 " }}}

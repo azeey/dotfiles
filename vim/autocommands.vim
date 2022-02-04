@@ -37,7 +37,6 @@ augroup ft_cpp
     au!
     au FileType cpp setlocal foldmethod=syntax sw=2 sts=2 ts=2 tw=80
     au FileType cpp let NERDSpaceDelims=1
-    au FileType cpp setlocal makeprg=GCC_COLORS=\ catkin\ build\ --this
     au FileType cpp setlocal comments^=:///
     au FileType cpp setlocal cindent cinoptions=i-s
     "" Follow google c++ style guide
@@ -133,3 +132,14 @@ augroup END
 " }}}
 " }}}
 
+
+" Journal {{{
+augroup ft_journal
+  au!
+    au Filetype journal syntax match todoCheckbox "\[\ \]" conceal cchar=
+    au Filetype journal syntax match todoCheckbox "\[\]" conceal cchar=
+    au Filetype journal syntax match todoCheckbox "\[x\]" conceal cchar=
+    au Filetype journal setlocal cole=1
+    au Filetype journal highlight Conceal guifg=fg
+augroup END
+" }}}

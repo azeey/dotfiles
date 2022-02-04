@@ -14,9 +14,20 @@ function! s:VSetSearch()
     let @@ = temp
 endfunction
 
-function! SynStack()
+function! s:SynStack()
   if !exists("*synstack")
     return
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+command! SyntaxQuery call s:SynStack()
+
+function s:PRReviewMode()
+  nmap <F5> :tabc<CR>
+  set diffopt-=iwhite 
+  "set diffopt+=algorithm:patience,linematch:500
+  TSDisableAll indent
+  TSDisableAll highlight
+  " ALEDisable
+endfunc
+command! -bar PRReviewMode call s:PRReviewMode()
