@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 fpath=("$HOME/.zsh.d" $fpath)
 
 source $HOME/dotfiles/antigen/antigen.zsh
@@ -20,7 +27,9 @@ antigen bundle common-aliases
 #antigen bundle zsh-users/zsh-completions
 
 # Load the theme.
-antigen theme bhilburn/powerlevel9k powerlevel9k
+#antigen theme bhilburn/powerlevel9k powerlevel9k
+antigen theme romkatv/powerlevel9k powerlevel9k
+#source $HOME/downloads/sonokai/zsh/.zsh-theme-sonokai-andromeda
 
 # Syntax highlighting bundle.
 # Syntax highlighting won't work with vi-mode. Disable for now
@@ -90,7 +99,12 @@ alias ack='ack-grep'
 alias vimdiff='vim -d'
 alias ag='ag --path-to-ignore ~/.ignore'
 alias gdb='gdb -q'
-alias ign-gdb='gdb --args /usr/bin/ruby $(which ign)'
+alias ign-gdb='gdb -q --args /usr/bin/ruby $(which ign)'
+alias ign-lldb='lldb -- /usr/bin/ruby $(which ign)'
+alias cgdb='cgdb -d gdb'
+alias ign-cgdb='cgdb -d gdb --args /usr/bin/ruby $(which ign)'
+alias ign-gdbgui='gdbgui --args /usr/bin/ruby $(which ign)'
+alias ign-perf='perf record -F 99 -g -- /usr/bin/ruby $(which ign)'
 alias gc="git commit -v -s"
 
 
@@ -141,15 +155,14 @@ wll(){
 
 [[ -s /usr/share/virtualenvwrapper/virtualenvwrapper.sh ]] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
-activate_anaconda(){
-    export PATH="$HOME/anaconda2/bin:$PATH"
-}
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export FZF_DEFAULT_COMMAND='ag -g ""'
+#export FZF_DEFAULT_COMMAND='fd'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER=''
-#bindkey '^T' fzf-completion
+#bindkey '^T' fzf-file-widget
 bindkey '^I' $fzf_default_completion
 
 export FZFZ_EXCLUDE_PATTERN="\.(git|hg)"
@@ -157,74 +170,46 @@ export FZFZ_SUBDIR_LIMIT=10
 # This makes a big difference
 export FZFZ_EXTRA_OPTS="-e"
 
-# revhgpr Branch [NOTES]
-#revhgpr() {
-    #if [[ ! -z $1 ]] ; then
+#revgitpr() {
+#    if [[ ! -z $1 ]] ; then
 
-        #if [[ ! -z $2 ]] ; then
-            #hg status --rev $1 | grep -v ^\? >> $2
-        #fi
+#        if [[ ! -z $2 ]] ; then
+#            if [[ ! -z $3 ]] ; then
+#                #hg status --change $(echo $3 | awk '{print $NF}') | grep -v ^\? >> $2
+#            else
+#                git diff --name-status $1... >> $2
+#            fi
+#        fi
 
-        #hg status --rev $1 -n  | grep -v ^\? | xargs vim
-    #else
-        #echo "Need branch to diff against and path to PR review file"
-    #fi
+#        if [[ ! -z $3 ]] ; then
+#            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview $3"
+#        else
+#            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview git diff $1..."
+#        fi
+#    else
+#        echo "Need branch to diff against and path to PR review file"
+#    fi
 #}
-
-# revhgpr Branch [NOTES] [hg diff command]
-revhgpr() {
-    if [[ ! -z $1 ]] ; then
-
-        if [[ ! -z $2 ]] ; then
-            if [[ ! -z $3 ]] ; then
-                hg status --change $(echo $3 | awk '{print $NF}') | grep -v ^\? >> $2
-            else
-                hg diff --stat --rev "ancestor($1,.)"  >> $2
-            fi
-        fi
-
-        if [[ ! -z $3 ]] ; then
-            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview $3"
-        else
-            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview hg diff --rev ancestor($1,.) "
-        fi
-    else
-        echo "Need branch to diff against and path to PR review file"
-    fi
-}
-
-# Setup revhgpr to use mercurial branch completion
-compdef "_hg_cmd_update -r" revhgpr
- _fzf_complete_revhgpr() {
-  _fzf_complete "--no-sort" "$@" < <( { hg branches -q})
- }
 
 revgitpr() {
     if [[ ! -z $1 ]] ; then
-
-        if [[ ! -z $2 ]] ; then
-            if [[ ! -z $3 ]] ; then
-                #hg status --change $(echo $3 | awk '{print $NF}') | grep -v ^\? >> $2
-            else
-                git diff --name-status $1... >> $2
-            fi
-        fi
-
-        if [[ ! -z $3 ]] ; then
-            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview $3"
-        else
-            vim -c "ALEDisable | set diffopt-=iwhite | DiffReview git diff $1..."
-        fi
-    else
-        echo "Need branch to diff against and path to PR review file"
+        gh pr diff | lsdiff --strip 1 -s >> $1
     fi
+
+    #$HOME/code/neovim-diff/install/bin/nvim -c "PRReviewMode| DiffReview gh pr diff"
+    vim -c "PRReviewMode| DiffReview gh pr diff"
+}
+
+revgitbranch() {
+    #$HOME/code/neovim-diff/install/bin/nvim -c "PRReviewMode | DiffReview git diff $1..."
+    vim -c "PRReviewMode | DiffReview git diff $1..."
 }
 
 # Setup revgitpr to use git branch completion
-#compdef "_hg_cmd_update -r" revhgpr
-# _fzf_complete_revhgpr() {
-#  _fzf_complete "--no-sort" "$@" < <( { hg branches -q})
-# }
+compdef "_git_cmd_update -r" revgitbranch
+ _fzf_complete_revgitbranch() {
+  _fzf_complete "--no-sort" "$@" < <( { git branch -a})
+ }
 
 
 nmmangled() {
@@ -279,19 +264,14 @@ _find_colcon_root_dir(){
   return $rc
 }
 gencolconcompdb() {
-  local curDir=$PWD
   local root_dir=$(_find_colcon_root_dir)
   if [[ $? -eq 0 ]] then
-    pushd -q $root_dir
-    local pkg=$(colcon list -n --paths $curDir)
+    local pkg=$(colcon --log-base /dev/null list -n --paths $PWD)
     local pkg_build_dir="$root_dir/build/$pkg"
-    pushd -q $pkg_build_dir
-    if [[ ! -e 'compile_commands.json' ]] then
-      cmake . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    if [[ ! -e "$pkg_build_dir/compile_commands.json" ]] then
+      cmake $pkg_build_dir -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     fi
-    compdb -p . list > $curDir/compile_commands.json
-    popd -q
-    popd -q
+    compdb -p $pkg_build_dir list > compile_commands.json
   fi
 }
 
@@ -301,10 +281,9 @@ eval "$(rbenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export DEBEMAIL="addisu@openrobotics.org"
-export DEBFULLNAME="Addizu Z. Taddese"
+export DEBFULLNAME="Addisu Z. Taddese"
 
 zle -N fzf-catkin-dir-widget
 bindkey -M viins -r '^B'
@@ -324,3 +303,5 @@ bindkey -M viins '^F' fzf-colcon-dir-widget
 bindkey -M vicmd '^F' fzf-colcon-dir-widget
 bindkey -M emacs '^F' fzf-colcon-dir-widget
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
