@@ -62,7 +62,7 @@ __fzfcolcon() {
     LIMIT_LENGTH="head -n $(($FZFCOLCON_SUBDIR_LIMIT+1))"
 
     SUBDIRS="{ $FIND_PREFIX $ROOTDIR/src $FIND_POSTFIX | $EXCLUDER }"
-    PKGS=($(colcon list -n --base-path $ROOTDIR))
+    PKGS=($(colcon --log-base /dev/null list -n --base-paths $ROOTDIR))
     COLCONDIRS=(build install)
     EXTRADIRS='{ print -l $ROOTDIR/${^COLCONDIRS}/${^PKGS} }'
     eval $EXTRADIRS
@@ -79,8 +79,8 @@ __fzfcolcon() {
 
 __fzfcolcontargets() {
     ROOTDIR="$(__fzf_find_colcon_root_dir)"
-    PKGS=($(colcon list -n --base-path $ROOTDIR))
-    TARGETDIRS=(src build install)
+    PKGS=($(colcon --log-base /dev/null list -n --base-paths $ROOTDIR))
+    TARGETDIRS=(build install)
     COLCONTOPDIRS='{ print -l $ROOTDIR/${^TARGETDIRS} }'
     COLCONPKGDIRS='{ print -l $ROOTDIR/${^TARGETDIRS}/${^PKGS} }'
 
