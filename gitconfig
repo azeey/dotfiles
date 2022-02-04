@@ -1,0 +1,32 @@
+[user]
+	name = Addisu Z. Taddese
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	l = shortlog
+	ready = rebase -i @{u}
+	wdiff = diff --color-words
+[color]
+	ui = true
+[core]
+  pager = less -r
+
+[diff]
+  tool = kdiff3
+[difftool]
+  prompt = false
+  keepBackup = false
+  trustExitCode = false
+[merge]
+  tool = kdiff3
+[mergetool]
+  prompt = false
+  keepBackup = false
+  keepTemporaries = false
+  trustExitCode = false
+
+[push]
+	default = simple
+[rerere]
+	enabled = true
