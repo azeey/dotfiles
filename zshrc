@@ -26,15 +26,16 @@ antigen bundle vi-mode
 antigen bundle extract
 antigen bundle z
 antigen bundle history-substring-search
-antigen bundle tmux
 antigen bundle debian
 antigen bundle common-aliases
-#antigen bundle docker
+antigen bundle fzf
 
-##antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-completions
 
 ## Load the theme.
 #antigen theme romkatv/powerlevel9k powerlevel9k
+
+# antigen theme spaceship-prompt/spaceship-prompt
 
 # fzf-z
 antigen bundle andrewferrier/fzf-z
@@ -86,10 +87,10 @@ alias trash=gvfs-trash
 alias v='vim -R -'
 alias agr='sudo apt-get upgrade'
 alias av='apt-cache show'
+alias ar="sudo $apt_pref remove"
 alias duhm='du -h --max-depth=1 | sort -h'
 alias duhs='du -hs * | sort -h'
 alias fn='find -name'
-#alias tmux='tmux -2'
 alias ack='ack-grep'
 alias vimdiff='vim -d'
 alias ag='ag --path-to-ignore ~/.ignore'
@@ -106,6 +107,8 @@ alias gz-perf='perf record -F 99 -g -- /usr/bin/ruby $(which gz)'
 
 alias gc="git commit -v -s"
 alias gsw="git switch"
+alias lg="lazygit"
+alias lgb="lazygit branch"
 
 
 # Key Bindings
@@ -133,8 +136,6 @@ if [ -x $HOME/code/catkin_ws/devel ]; then
 fi
 
 
-# Using Stow now
-export PATH=$PATH:/opt/bin
 
 # ccache
 export PATH=/usr/lib/ccache:$PATH
@@ -159,7 +160,7 @@ wll(){
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_DEFAULT_COMMAND='fd'
+export FZF_DEFAULT_COMMAND='fdfind'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER='~~'
 
@@ -276,21 +277,21 @@ gencolconcompdb() {
   fi
 }
 
+dv() {
+  vi +"DiffviewOpen -uno $1"
+}
+
+# Setup dv to use git branch completion
+# compdef "_git_cmd_update -r" dv
+#  _fzf_complete_dv() {
+#   _fzf_complete "--no-sort" "$@" < <( { git branch -a})
+#  }
 
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 export DEBEMAIL="addisu@openrobotics.org"
 export DEBFULLNAME="Addisu Z. Taddese"
-
-zle -N fzf-catkin-dir-widget
-bindkey -M viins -r '^B'
-bindkey -M vicmd -r '^B'
-bindkey -M emacs -r '^B'
-
-bindkey -M viins '^B' fzf-catkin-dir-widget
-bindkey -M vicmd '^B' fzf-catkin-dir-widget
-bindkey -M emacs '^B' fzf-catkin-dir-widget
 
 zle -N fzf-colcon-dir-widget
 bindkey -M viins -r '^F'
@@ -301,14 +302,14 @@ bindkey -M viins '^F' fzf-colcon-dir-widget
 bindkey -M vicmd '^F' fzf-colcon-dir-widget
 bindkey -M emacs '^F' fzf-colcon-dir-widget
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-export PATH="$PATH:$HOME/go/bin/"
 
 eval "$(starship init zsh)"
-
 
 # Enable docker to autocomplete with after cli flags.
 # See https://github.com/ohmyzsh/ohmyzsh/issues/9266
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
+
+gz_last_release_version() {
+  git describe --tags --abbrev=0 | sed 's/.*_//'
+}

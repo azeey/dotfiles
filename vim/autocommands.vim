@@ -142,16 +142,22 @@ augroup ft_jrnl
 augroup END
 " }}}
 " }}}
+" URDF {{{
+augroup ft_urdf
+    au!
+    au BufNewFile,BufRead *.urdf setlocal ft=xml ts=2 sts=2 sw=2
+augroup END
+" }}}
 " }}}
 
 
 " Journal {{{
 augroup ft_journal
   au!
-    au Filetype journal syntax match todoCheckbox "\[\ \]" conceal cchar=
-    au Filetype journal syntax match todoCheckbox "\[\]" conceal cchar=
-    au Filetype journal syntax match todoCheckbox "\[x\]" conceal cchar=
-    au Filetype journal setlocal cole=1
-    au Filetype journal highlight Conceal guifg=fg
+    "au Filetype journal syntax match todoCheckbox "\[\ \]" conceal cchar=
+    "au Filetype journal syntax match todoCheckbox "\[\]" conceal cchar=
+    "au Filetype journal syntax match todoCheckbox "\[x\]" conceal cchar=
+    "au Filetype journal setlocal cole=1
+    "au Filetype journal highlight Conceal guifg=fg
 augroup END
 " }}}

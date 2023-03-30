@@ -11,14 +11,9 @@ echo "Setting up dotfiles"
 
 echo "Installing dependencies..."
 
-LIST_OF_APPS="git exuberant-ctags cscope tmux zsh python-dev python-pip xsel silversearcher-ag neovim"
+LIST_OF_APPS="xsel silversearcher-ag neovim"
 
 # Add neovim ppa
-sudo apt-get update
-sudo apt-get install -ym software-properties-common
-
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-sudo add-apt-repository -y ppa:pi-rho/dev
 sudo apt-get update
 
 
@@ -32,11 +27,6 @@ sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 sudo update-alternatives --config vi
 sudo update-alternatives --config vim
 sudo update-alternatives --config editor
-
-
-echo "Setting up dev tools from $GIT_URL"
-# Checkout from github
-git clone --recursive $GIT_URL $DOTFILES_DIR
 
 
 function sym {
@@ -57,18 +47,13 @@ sym $DOTFILES_DIR/inputrc $HOME/.inputrc
 sym $DOTFILES_DIR/zshrc $HOME/.zshrc
 sym $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
 sym $DOTFILES_DIR/vim $HOME/.vim
-sym $DOTFILES_DIR/Xresources $HOME/.Xresources
-sym $DOTFILES_DIR/xprofile $HOME/.xprofile
 sym $HOME/.vim/vimrc $HOME/.vimrc
 mkdir -p $HOME/.config
 sym $HOME/.vim $HOME/.config/nvim
 
 # Other packages
-pip install --user git+git://github.com/Lokaltog/powerline
 pip install --user neovim
 
-git clone https://github.com/Lokaltog/powerline-fonts.git /tmp/powerline-fonts
-bash /tmp/powerline-fonts/install.sh
 
 # Install z.sh
 mkdir -p $HOME/downloads/src/

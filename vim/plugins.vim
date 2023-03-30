@@ -25,7 +25,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-eunuch'
 " }}}
 " Linting and Language Server (LSP)- {{{
-"Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -35,12 +35,16 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'nvim-lua/lsp-status.nvim'
+Plug 'p00f/clangd_extensions.nvim'
+Plug 'onsails/lspkind-nvim'
+Plug 'ray-x/lsp_signature.nvim'
 " }}}
 " Misc - {{{
 " YankRink alternative
 Plug 'bfredl/nvim-miniyank'
 " Gundo alternative
 Plug 'simnalamburt/vim-mundo'
+Plug 'aymericbeaumet/vim-symlink' " helps with bazel cache files
 " }}}
 " Motion - {{{
 " Plug 'Lokaltog/vim-easymotion'
@@ -65,7 +69,6 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'jlconlin/cpp.vim'
 "Plug 'othree/xml.vim'
 Plug 'plasticboy/vim-markdown'
-Plug 'vim-pandoc/vim-pandoc'
 " }}}
 " VCS - {{{
 Plug 'tpope/vim-fugitive'
@@ -77,40 +80,43 @@ Plug 'reedes/vim-pencil'
 Plug 'mikewest/vimroom'
 Plug 'junegunn/vim-journal'
 " }}}
-" Activity Tracking - {{{
-Plug 'ActivityWatch/aw-watcher-vim'
-" }}}
 " Evaluating Plugins {{{
 
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-rsi'
 Plug 'peterhoeg/vim-qml'
-Plug 'ruanyl/vim-gh-line'
+"Plug 'ruanyl/vim-gh-line'
+Plug 'ruifm/gitlinker.nvim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'jlanzarotta/bufexplorer'
-Plug 'vim-scripts/auto-pairs-gentle'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  }
+" Plug 'vim-scripts/auto-pairs-gentle'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarnpkg install'  }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-Plug 'nvim-treesitter/playground'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
-Plug 'PratikBhusal/vim-grip'
+"Plug 'PratikBhusal/vim-grip'
 Plug 'tpope/vim-characterize'
 "Plug 'simrat39/symbols-outline.nvim'
 Plug 'liuchengxu/vista.vim'
 Plug 'nvim-orgmode/orgmode'
 Plug 'folke/trouble.nvim'
-Plug 'nvim-neorg/neorg', {'tag': '0.0.15'}
 Plug 'p00f/clangd_extensions.nvim'
+
+if has('nvim-0.8')
+  Plug 'nvim-neorg/neorg', {'tag': '0.0.15'}
+endif
 Plug 'edluffy/specs.nvim'
 Plug 'onsails/lspkind-nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
+Plug 'numToStr/Comment.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
 
 Plug 'phaazon/hop.nvim', {'tag': 'v1.3.0'}
 Plug 'folke/twilight.nvim'
@@ -410,6 +416,16 @@ telescope.setup{
           ["<cr>"] = custom_actions.fzf_multi_select
       }
     },
+      n = {
+          ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
+          ["<s-tab>"] = actions.toggle_selection + actions.move_selection_previous,
+          ["<cr>"] = custom_actions.fzf_multi_select
+      }
+    },
+  },
+  pickers = {
+    buffers = {
+      sort_lastused = true
   },
   pickers = {
     buffers = {
@@ -447,6 +463,7 @@ local on_attach = function(client, bufnr)
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr(#{timeout_ms:250})')
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
