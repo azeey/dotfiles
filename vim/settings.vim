@@ -8,30 +8,6 @@ if has('termguicolors')
   set termguicolors
 endif
 
-let g:sonokai_style = 'andromeda'
-let g:sonokai_enable_italic = 0
-let g:sonokai_disable_italic_comment = 1
-let g:sonokai_transparent_background = 0
-
-function! s:sonokai_custom() abort
-  let l:configuration = sonokai#get_configuration()
-  let l:palette = sonokai#get_palette(l:configuration.style)
-  call sonokai#highlight('DiffDelete', l:palette.diff_red, l:palette.diff_red)
-endfunction
-
-augroup SonokaiCustom
-  autocmd!
-  autocmd ColorScheme sonokai call s:sonokai_custom()
-augroup END
-colorscheme sonokai
-
-let g:lightline.colorscheme = 'sonokai'
-" When treesitter has a parsing error, it sets TSError on every line which 
-" causes every line to be underlined, so we clear the highlight group here.
-hi clear TSError
-
-" hi Search cterm=bold ctermfg=235 ctermbg=176 gui=bold guifg=#282c34 guibg=#c678dd
-" hi! DiffAdd   cterm=NONE gui=NONE guifg=NONE ctermfg=NONE  term=NONE 
 " }}}
 "
 
@@ -84,13 +60,15 @@ set listchars=tab:▸\ ,trail:·,eol:¬,extends:❯,precedes:❮
 " t - autowrap TEXT using textwidth
 set formatoptions=crqnvtw
 
-" Set the update time to 500ms so ...
-"set updatetime=500
+" Set the update time. This affects CursorHold time
+set updatetime=250
 
 " Use clipboard
 set clipboard=unnamedplus
 
 set modeline
+
+set laststatus=3
 
 " Turn tabs into spaces
 set expandtab
@@ -99,15 +77,15 @@ set expandtab
 set tags=./tags,tags,~/tags
 
 " Diffs
-set diffopt& diffopt+=algorithm:histogram,indent-heuristic
+set diffopt& diffopt+=algorithm:histogram,indent-heuristic,vertical
 
 " Folding -----------------------------------------------------------------{{{
 
 " set foldlevelstart=0
 
 " Space to toggle folds.
-nnoremap <Space> za
-vnoremap <Space> za
+"nnoremap <Space> za
+"vnoremap <Space> za
 
 " "Refocus" folds
 nnoremap <leader>z zMzvzz

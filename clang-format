@@ -2,7 +2,7 @@ BasedOnStyle: Google
 IndentWidth: 2
 ---
 Language: Cpp
-AccessModifierOffset : -4
+AccessModifierOffset : 0
 AllowShortIfStatementsOnASingleLine : false
 AlwaysBreakTemplateDeclarations : true
 BreakBeforeBraces : Allman
@@ -11,3 +11,10 @@ AllowShortFunctionsOnASingleLine : None
 Standard : C++11
 DerivePointerAlignment: false
 PointerAlignment: Right
+NamespaceIndentation: None
+Cpp11BracedListStyle: true
+SpaceBeforeCpp11BracedList: false
+SortIncludes: true
+ColumnLimit: 80
+PenaltyBreakBeforeFirstCallParameter: 10
+CommentPragmas:  '^\\.+'

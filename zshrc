@@ -1,11 +1,18 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
 
 fpath=("$HOME/.zsh.d" $fpath)
+
+# Uncommenting this will break completion for aliases in a different way.
+# When uncommented, gco will complete with files instead of branches.
+#setopt complete_aliases
+
+# Case sensitive completion
+CASE_SENSITIVE=true
 
 source $HOME/dotfiles/antigen/antigen.zsh
 
@@ -13,7 +20,6 @@ source $HOME/dotfiles/antigen/antigen.zsh
 antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle mercurial
 antigen bundle git
 antigen bundle command-not-found
 antigen bundle vi-mode
@@ -23,32 +29,21 @@ antigen bundle history-substring-search
 antigen bundle tmux
 antigen bundle debian
 antigen bundle common-aliases
+#antigen bundle docker
 
-#antigen bundle zsh-users/zsh-completions
+##antigen bundle zsh-users/zsh-completions
 
-# Load the theme.
-#antigen theme bhilburn/powerlevel9k powerlevel9k
-antigen theme romkatv/powerlevel9k powerlevel9k
-#source $HOME/downloads/sonokai/zsh/.zsh-theme-sonokai-andromeda
+## Load the theme.
+#antigen theme romkatv/powerlevel9k powerlevel9k
 
-# Syntax highlighting bundle.
-# Syntax highlighting won't work with vi-mode. Disable for now
-#antigen bundle zsh-users/zsh-syntax-highlighting
-#
 # fzf-z
 antigen bundle andrewferrier/fzf-z
-
-# fzf-catkin
-antigen bundle ~/.zsh.d/fzf-catkin --no-local-clone
-
-# fzf-colcon
 antigen bundle ~/.zsh.d/fzf-colcon --no-local-clone
 
 # Tell antigen that you're done.
 antigen apply
 
 
-setopt complete_aliases
 export apt_pref="apt"
 setopt EXTENDED_HISTORY		# puts timestamps in the history
 setopt INC_APPEND_HISTORY SHARE_HISTORY
@@ -100,12 +95,17 @@ alias vimdiff='vim -d'
 alias ag='ag --path-to-ignore ~/.ignore'
 alias gdb='gdb -q'
 alias ign-gdb='gdb -q --args /usr/bin/ruby $(which ign)'
+alias gz-gdb='gdb -q --args /usr/bin/ruby $(which gz)'
 alias ign-lldb='lldb -- /usr/bin/ruby $(which ign)'
+alias gz-lldb='lldb -- /usr/bin/ruby $(which gz)'
 alias cgdb='cgdb -d gdb'
 alias ign-cgdb='cgdb -d gdb --args /usr/bin/ruby $(which ign)'
 alias ign-gdbgui='gdbgui --args /usr/bin/ruby $(which ign)'
 alias ign-perf='perf record -F 99 -g -- /usr/bin/ruby $(which ign)'
+alias gz-perf='perf record -F 99 -g -- /usr/bin/ruby $(which gz)'
+
 alias gc="git commit -v -s"
+alias gsw="git switch"
 
 
 # Key Bindings
@@ -158,12 +158,13 @@ wll(){
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_COMMAND='ag -g ""'
-#export FZF_DEFAULT_COMMAND='fd'
+#export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND='fd'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_COMPLETION_TRIGGER=''
-#bindkey '^T' fzf-file-widget
-bindkey '^I' $fzf_default_completion
+export FZF_COMPLETION_TRIGGER='~~'
+
+#bindkey '^I' $fzf_default_completion
+#bindkey '^I' $fzf_default_completion
 
 export FZFZ_EXCLUDE_PATTERN="\.(git|hg)"
 export FZFZ_SUBDIR_LIMIT=10
@@ -275,12 +276,9 @@ gencolconcompdb() {
   fi
 }
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 export DEBEMAIL="addisu@openrobotics.org"
 export DEBFULLNAME="Addisu Z. Taddese"
@@ -304,4 +302,13 @@ bindkey -M vicmd '^F' fzf-colcon-dir-widget
 bindkey -M emacs '^F' fzf-colcon-dir-widget
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+export PATH="$PATH:$HOME/go/bin/"
+
+eval "$(starship init zsh)"
+
+
+# Enable docker to autocomplete with after cli flags.
+# See https://github.com/ohmyzsh/ohmyzsh/issues/9266
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes

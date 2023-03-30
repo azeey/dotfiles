@@ -28,7 +28,7 @@ nnoremap <c-o> <c-o>zz
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " Put the current date and time on the next line
-nmap <leader>dt :put =strftime('%Y-%m-%d %H:%M')<CR>A
+nmap <leader>dt :put =strftime('* %Y-%m-%d %H:%M')<CR>A
 
 " Toggle paste mode
 nnoremap <silent> <leader>p :set invpaste<CR>:set paste?<CR>
@@ -88,8 +88,6 @@ nnoremap <silent> <leader>c :set cursorline! cursorcolumn! <CR>
 
 " Clean trailing whitespace
 nnoremap <silent> <leader>w mz:%s/\s\+$//<cr>:let @/=''<cr>`z
-
-noremap <silent> <F12> :Ctag '.'<CR>
 
 "make <c-l> clear the highlight as well as redraw
 nnoremap <C-L> :nohls<CR><C-L>

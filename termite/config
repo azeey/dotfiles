@@ -1,6 +1,10 @@
 [options]
-font = Menlo for Powerline 13
-font = Source Code Pro for Powerline 13
+#font = Haskplex Nerd Regular 13
+#font = Roboto Mono for Powerline 13
+#font = Menlo for Powerline 13
+font = SauceCode Pro Nerd Font Medium 13
+#font = SauceCode Pro Nerd Font Mono 13
+#font = Source Code Pro for Powerline 13
 #font = Inconsolata-dz for Powerline 13
 #allow_bold = true
 #audible_bell = false

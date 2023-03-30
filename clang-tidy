@@ -1,15 +1,29 @@
 ---
-Checks:          '-*,clang-diagnostic-*,clang-analyzer-*,clang-analyzer-cplusplus*, modernize-*, bugprone-*, cppcoreguidelines-*, performance-*, -cppcoreguidelines-pro-type-vararg'
-WarningsAsErrors: ''
-HeaderFilterRegex: ''
+Checks: >
+  -*,
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  clang-analyzer-cplusplus*,
+  modernize-*,
+  -modernize-use-trailing-return-type,
+  bugprone-*,
+  performance-*,
+  -performance-unnecessary-value-param,
+  -modernize-use-nodiscard,
+  -modernize-concat-nested-namespaces,
+  -modernize-use-auto,
+  -performance-no-automatic-move,
+
+WarningsAsErrors: ""
+HeaderFilterRegex: ""
 AnalyzeTemporaryDtors: false
-FormatStyle:     'file'
+FormatStyle: "file"
 CheckOptions:
-  - key:             modernize-loop-convert.NamingStyle
-    value:           CamelCase
-  - key:             modernize-pass-by-value.IncludeStyle
-    value:           llvm
-  - key:             modernize-replace-auto-ptr.IncludeStyle
-    value:           llvm
-  - key:             modernize-use-nullptr.NullMacros
-    value:           'NULL'
+  - key: modernize-loop-convert.NamingStyle
+    value: CamelCase
+  - key: modernize-pass-by-value.IncludeStyle
+    value: llvm
+  - key: modernize-replace-auto-ptr.IncludeStyle
+    value: llvm
+  - key: modernize-use-nullptr.NullMacros
+    value: "NULL"

@@ -129,6 +129,18 @@ augroup ft_sdf
     au BufNewFile,BufRead *.sdf setlocal ft=xml ts=2 sts=2 sw=2
     au BufNewFile,BufRead *.world setlocal ft=xml ts=2 sts=2 sw=2
 augroup END
+" JSON {{{
+augroup ft_json
+    au!
+    au FileType json set formatprg=jq
+augroup END
+" }}}
+" Journal {{{
+augroup ft_jrnl
+    au!
+    au BufNewFile,BufRead *.jrnl setlocal ft=journal fdm=syntax
+augroup END
+" }}}
 " }}}
 " }}}
 

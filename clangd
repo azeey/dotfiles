@@ -1,0 +1,19 @@
+---
+Diagnostics:
+  ClangTidy:
+    Remove:
+      - modernize-concat-nested-namespaces
+      - cppcoreguidelines-special-member-functions
+      - modernize-use-trailing-return-type
+      - modernize-avoid-c-arrays
+      - cppcoreguidelines-avoid-c-arrays
+      - readability-identifier-naming
+      - modernize-use-auto
+      - modernize-return-braced-init-list
+      - performance-unnecessary-copy-initialization
+      - readability-function-cognitive-complexity
+      - performance-unnecessary-value-param
+      - modernize-use-nodiscard
+      - bugprone-easily-swappable-parameters
+      - modernize-pass-by-value
+      - modernize-avoid-bind
