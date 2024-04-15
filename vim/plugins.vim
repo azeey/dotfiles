@@ -10,7 +10,7 @@ Plug 'pwntester/octo.nvim'
 " }}}
 " Color schemes - {{{
 Plug 'ayu-theme/ayu-vim'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rakr/vim-one'
 Plug 'sainnhe/sonokai'
@@ -21,11 +21,14 @@ Plug 'navarasu/onedark.nvim'
 Plug 'tpope/vim-dispatch'
 " }}}
 " File manipulation - {{{
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-eunuch'
+" Plug 'scrooloose/nerdtree'
+" vim-eunuch interferes with vim-pencil. nvim-genghis is an alternative for
+" some of the operations like :Rename and :Delete
+" Plug 'tpope/vim-eunuch'
+Plug 'chrisgrieser/nvim-genghis'
 " }}}
 " Linting and Language Server (LSP)- {{{
-Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+"Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -35,23 +38,19 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'nvim-lua/lsp-status.nvim'
-Plug 'p00f/clangd_extensions.nvim'
-Plug 'onsails/lspkind-nvim'
-Plug 'ray-x/lsp_signature.nvim'
 " }}}
 " Misc - {{{
 " YankRink alternative
 Plug 'bfredl/nvim-miniyank'
 " Gundo alternative
 Plug 'simnalamburt/vim-mundo'
-Plug 'aymericbeaumet/vim-symlink' " helps with bazel cache files
 " }}}
 " Motion - {{{
 " Plug 'Lokaltog/vim-easymotion'
 Plug 'austintaylor/vim-commaobject'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-scripts/matchit.zip'
+"Plug 'vim-scripts/matchit.zip'
 " }}}
 " Snippets - {{{
 Plug 'SirVer/ultisnips'
@@ -59,7 +58,7 @@ Plug 'honza/vim-snippets'
 " }}}
 " Text Editing - {{{
 Plug 'godlygeek/tabular'
-Plug 'scrooloose/nerdcommenter'
+"Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -96,48 +95,61 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 "Plug 'PratikBhusal/vim-grip'
 Plug 'tpope/vim-characterize'
-"Plug 'simrat39/symbols-outline.nvim'
+Plug 'simrat39/symbols-outline.nvim'
 Plug 'liuchengxu/vista.vim'
 Plug 'nvim-orgmode/orgmode'
 Plug 'folke/trouble.nvim'
-Plug 'p00f/clangd_extensions.nvim'
-
-if has('nvim-0.8')
-  Plug 'nvim-neorg/neorg', {'tag': '0.0.15'}
+if has('nvim')
+  " Plug 'nvim-neorg/neorg', {'tag': '0.0.15'}
+  Plug 'nvim-neorg/neorg'
 endif
+Plug 'p00f/clangd_extensions.nvim'
 Plug 'edluffy/specs.nvim'
 Plug 'onsails/lspkind-nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'numToStr/Comment.nvim'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 
-Plug 'phaazon/hop.nvim', {'tag': 'v1.3.0'}
+" Plug 'phaazon/hop.nvim', {'tag': 'v1.3.0'}
 Plug 'folke/twilight.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'arkav/lualine-lsp-progress'
 Plug 'jremmen/vim-ripgrep'
 Plug 'rickhowe/diffchar.vim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-telescope/telescope-frecency.nvim',
-Plug 'tami5/sqlite.lua'
+Plug 'tami5/sqlite.lua' " dependency of telescope-frecency
 Plug 'goldfeld/ctrlr.vim'
-Plug 'nvim-treesitter/nvim-treesitter-context'
-" Plug 'stevearc/stickybuf.nvim' " Disabled for now since it causes to start 
+"Plug 'nvim-treesitter/nvim-treesitter-context'
+" Plug 'stevearc/stickybuf.nvim' " Disabled for now since it causes to start
 " in insert mode when using telescope
-Plug 'aymericbeaumet/vim-symlink' " helps with bazel cache files
+" Plug 'aymericbeaumet/vim-symlink' " helps with bazel cache files
 Plug 'moll/vim-bbye' " optional dependency of vim-symlink
 Plug 'ggandor/leap.nvim'
 Plug 'ThePrimeagen/refactoring.nvim'
 Plug 'chrisbra/SaveSigns.vim'
 Plug 'samoshkin/vim-mergetool'
-Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'ruifm/gitlinker.nvim'
 Plug 'fhill2/telescope-ultisnips.nvim'
+Plug 'cdelledonne/vim-cmake'
+Plug 'andymass/vim-matchup'
+Plug 'norcalli/nvim-terminal.lua'
+Plug 'SmiteshP/nvim-navic'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'SmiteshP/nvim-navbuddy'
+Plug 'nvim-pack/nvim-spectre'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'cshuaimin/ssr.nvim'
+Plug 'tyru/open-browser.vim'
+Plug 'tpope/vim-jdaddy'
 " }}}
 "
 call plug#end()
@@ -182,12 +194,12 @@ augroup END
 colorscheme sonokai
 
 let g:lightline.colorscheme = 'sonokai'
-" When treesitter has a parsing error, it sets TSError on every line which 
+" When treesitter has a parsing error, it sets TSError on every line which
 " causes every line to be underlined, so we clear the highlight group here.
 hi clear TSError
 
 " hi Search cterm=bold ctermfg=235 ctermbg=176 gui=bold guifg=#282c34 guibg=#c678dd
-" hi! DiffAdd   cterm=NONE gui=NONE guifg=NONE ctermfg=NONE  term=NONE 
+" hi! DiffAdd   cterm=NONE gui=NONE guifg=NONE ctermfg=NONE  term=NONE
 " }}}
 " }}}
 "
@@ -205,10 +217,6 @@ map <leader>p <Plug>(miniyank-startput)
 map <leader>P <Plug>(miniyank-startPut)
 map <C-p> <Plug>(miniyank-cycle)
 let g:miniyank_filename = $HOME."/.miniyank.mpack"
-" }}}
-" Pandoc {{{
-let g:pandoc_use_hard_wraps = 0
-let g:pandoc_auto_format = 0
 " }}}
 " NERDTree {{{
 " Toggle the NERD Tree on an off with F7
@@ -233,7 +241,7 @@ let NERDTreeIgnore=[ '\.ncb$', '\.suo$', '\.vcproj\.RIMNET', '\.obj$',
 " Surround {{{
 " Use the surround plugin to create markers
 let g:surround_{char2nr("m")} = "<!--{{{--> \r <!--}}}-->"
-let g:surround_{char2nr("c")} = "```\r```" 
+let g:surround_{char2nr("c")} = "```\r```"
 " }}}
 " Mundo {{{
 nnoremap <F4> :MundoToggle<CR>
@@ -305,6 +313,9 @@ nnoremap ]k :DirDiffPrev<cr>
 " vim-markdown's ]c mapping conflicts with the builtin mapping for navigating
 " in diff mode
 map <localleader>c <Plug>Markdown_MoveToCurHeader
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
+
 " }}}
 " auto-pairs {{{
 "
@@ -322,19 +333,25 @@ let g:patchreview_disable_syntax = 0
 "let g:patchreview_split_right = 1
 " }}}
 " nvim-treesitter {{{
+"
+let g:nvim_tree_disable_netrw = 0
+let g:nvim_tree_hijack_netrw = 0
+
 lua <<EOF
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"c", "cpp", "python", "norg", "ruby", "html"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  ensure_installed = {"c", "cpp", "python", "norg", "ruby", "html", "lua", "vim", "css", "graphql", "javascript"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = { }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
   },
   indent = {
     enable = false,
-  }
-}
-require "nvim-treesitter.configs".setup {
+  },
+  matchup = {
+    enable = true, -- mandatory, false will disable the whole extension
+    disable = {"vim"},  -- optional, list of language that will be disabled
+  },
   playground = {
     enable = true,
     disable = {},
@@ -352,7 +369,11 @@ require "nvim-treesitter.configs".setup {
       goto_node = '<cr>',
       show_help = '?',
     },
-  }
+  },
+
+  context_commentstring = {
+    enable = true,
+  },
 }
 
 
@@ -416,16 +437,7 @@ telescope.setup{
           ["<cr>"] = custom_actions.fzf_multi_select
       }
     },
-      n = {
-          ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
-          ["<s-tab>"] = actions.toggle_selection + actions.move_selection_previous,
-          ["<cr>"] = custom_actions.fzf_multi_select
-      }
-    },
-  },
-  pickers = {
-    buffers = {
-      sort_lastused = true
+    path_display = {shorten = 3},
   },
   pickers = {
     buffers = {
@@ -492,6 +504,10 @@ local on_attach = function(client, bufnr)
   vim.cmd [[autocmd! CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 
   require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
+
+  require("nvim-navbuddy").attach(client, bufnr)
+  require("nvim-navic").setup({highlight = true})
+  require("nvim-navic").attach(client, bufnr)
 end
 
   -- Setup nvim-cmp.
@@ -597,7 +613,8 @@ EOF
 " Statusline
 function! LspStatus() abort
   if luaeval('#vim.lsp.buf_get_clients() > 0')
-    return luaeval("require('lsp-status').status()")
+    " return luaeval("require('lsp-status').status()")
+    if luaeval('require('')')
   endif
 
   return ''
@@ -703,17 +720,17 @@ nnoremap <silent> <F3> :lua require'dapui'.toggle()<CR>
 
 " }}}
 " hop {{{
-lua <<EOF
-require'hop'.setup()
-
-vim.api.nvim_set_keymap('n', '<leader><leader>f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader><leader>F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader><leader>t', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader><leader>T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader><leader>T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader><leader>w', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR})<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader><leader>b', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR})<cr>", {})
-EOF
+" lua <<EOF
+" require'hop'.setup()
+"
+" vim.api.nvim_set_keymap('n', '<leader><leader>f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+" vim.api.nvim_set_keymap('n', '<leader><leader>F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+" vim.api.nvim_set_keymap('n', '<leader><leader>t', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+" vim.api.nvim_set_keymap('n', '<leader><leader>T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+" vim.api.nvim_set_keymap('n', '<leader><leader>T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+" vim.api.nvim_set_keymap('n', '<leader><leader>w', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR})<cr>", {})
+" vim.api.nvim_set_keymap('n', '<leader><leader>b', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR})<cr>", {})
+" EOF
 " }}}
 " twilight {{{
 lua << EOF
@@ -726,39 +743,53 @@ lua <<EOF
 EOF
 " }}}
 " neorg {{{
+if has('nvim')
 lua <<EOF
 require('neorg').setup {
     load = {
         ["core.defaults"] = {},
-        ["core.norg.concealer"] = {},
-        ["core.norg.dirman"] = {
+        ["core.concealer"] = {},
+        ["core.dirman"] = {
             config = {
                 workspaces = {
                     work = "~/notes/work",
                 }
             }
         },
-        ["core.gtd.base"] = {
-          config = {
-            workspace = "work"
-          }
-        },
-        ["core.norg.completion"] = {
+        -- ["core.gtd.base"] = {
+        --   config = {
+        --     workspace = "work"
+        --   }
+        -- },
+        ["core.completion"] = {
           config = {
             engine = "nvim-cmp"
           }
         },
-        ["core.export"] = {},
+        -- ["core.export"] = {},
     }
 }
 EOF
+endif
 " }}}
 " Leap {{{
 nmap s <Plug>(leap-forward-to)
 nmap S <Plug>(leap-backward-to)
 " }}}
-" Refactoring {{{
+" markdown-preview {{{
+let g:mkdp_command_for_global = 1
+let g:mkdp_markdown_css = expand('~/.vim/markdown_style.css')
+" }}}
+
+" telescope-ultisnips {{{
 lua <<EOF
+require('telescope').load_extension('ultisnips')
+EOF
+" }}}
+"
+" lua based plugins:
+lua <<EOF
+-- Refactoring {{{
 require('refactoring').setup {}
 -- load refactoring Telescope extension
 require("telescope").load_extension("refactoring")
@@ -770,27 +801,54 @@ vim.api.nvim_set_keymap(
 	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
 	{ noremap = true }
 )
-EOF
-" }}}
-" markdown-preview {{{
-let g:mkdp_command_for_global = 1 
-let g:mkdp_markdown_css = expand('~/.vim/markdown_style.css')
-" }}}
+-- }}}
 
-" vim-oscyank {{{
-vnoremap <leader>y :OSCYank<CR>
-nmap <leader>y <Plug>OSCYank
- 
-" }}}
-" gitlinker {{{
-lua <<EOF
-require"gitlinker".setup()
-EOF
-" }}}
+-- Comment {{{
+require('Comment').setup()
+local api = require('Comment.api')
+-- Mapping from Nerd-commenter
+vim.keymap.set('n', '<leader>cu', api.uncomment.linewise.current)
+vim.keymap.set('n', '<leader>cl', api.comment.linewise.current)
+vim.keymap.set('n', '<leader>cy', "yy<leader>cl", {remap=true})
+-- }}}
 
-" telescope-ultisnips {{{
-lua <<EOF
-require('telescope').load_extension('ultisnips')
+-- gitlinker {{{
+require("gitlinker").setup()
+-- }}}
+
+-- terminal {{{
+require'terminal'.setup()
+-- }}}
+
+-- lualine {{{
+require('lualine').setup({
+   winbar = {
+        lualine_c = {
+            "navic",
+            color_correction = nil,
+            navic_opts = nil,
+        }
+    },
+    sections = {
+        lualine_x = {
+          'lsp_progress',
+        }
+      }
+   })
+-- }}}
+
+-- nvim-tree {{{
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup{
+  hijack_netrw = true,
+  disable_netrw = false,
+}
+vim.keymap.set('n', '<leader>fe', "<cmd>NvimTreeToggle<cr>")
+-- }}}
+
 EOF
 " }}}
 " }}}

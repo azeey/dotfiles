@@ -2,21 +2,21 @@
 " Any file - Line Return {{{
 " Make sure Vim returns to the same line when you reopen a file.
 " Thanks, Amit
-augroup line_return
-    au!
-    au BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \     execute 'normal! g`"zvzz' |
-        \ endif
-augroup END
+" augroup line_return
+"     au!
+"     au BufReadPost *
+"         \ if line("'\"") > 0 && line("'\"") <= line("$") |
+"         \     execute 'normal! g`"zvzz' |
+"         \ endif
+" augroup END
 
 " }}}
 " Binary {{{
 augroup Binary
     au!
     au BufReadPre   *.bin let &bin=1
-    au BufReadPost  *.bin if &bin | %!xxd
-    au BufReadPost  *.bin set filetype=xxd | endif
+    " au BufReadPost  *.bin if &bin | %!xxd
+    " au BufReadPost  *.bin set filetype=xxd | endif
     au BufWritePre  *.bin if &bin | %!xxd -r
     au BufWritePre  *.bin endif
     au BufWritePost *.bin if &bin | %!xxd
@@ -54,11 +54,11 @@ augroup END
 " }}}
 " Vim {{{
 
-augroup ft_vim
-    au!
-    au FileType vim setlocal foldmethod=marker
-    au FileType help setlocal textwidth=78
-augroup END
+" augroup ft_vim
+"     au!
+"     au FileType vim setlocal foldmethod=marker
+"     au FileType help setlocal textwidth=78
+" augroup END
 
 " }}}
 " Python {{{

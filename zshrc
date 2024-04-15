@@ -313,3 +313,6 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 gz_last_release_version() {
   git describe --tags --abbrev=0 | sed 's/.*_//'
 }
+
+export LANG=${LANG:-"en_US.UTF-8"}
+export LC_ALL=${LC_ALL:-"en_US.UTF-8"}

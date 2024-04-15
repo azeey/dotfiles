@@ -1,5 +1,35 @@
+# Which is equivalent to
+format = """
+$username\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$docker_context\
+$package\
+$cmake\
+$python\
+$ruby\
+$sudo\
+$cmd_duration\
+$jobs\
+$battery\
+$time\
+$status\
+$os\
+$container\
+$shell\
+$character"""
+
 [hostname]
 ssh_only = false
 
 [directory]
 truncate_to_repo = false
+
