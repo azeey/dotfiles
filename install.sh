@@ -11,23 +11,24 @@ echo "Setting up dotfiles"
 
 echo "Installing dependencies..."
 
-LIST_OF_APPS="xsel silversearcher-ag neovim"
+LIST_OF_APPS="xsel ripgrep fd-find curl"
 
 # Add neovim ppa
 sudo apt-get update
 
-
 # Install Git
 sudo apt-get install -y $LIST_OF_APPS; true
 
-# Use neovim as vim
-sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-sudo update-alternatives --config vi
-sudo update-alternatives --config vim
-sudo update-alternatives --config editor
-
+mkdir -p $HOME/downloads
+(
+  cd $HOME/downloads
+  curl -o nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
+  tar xzvf nvim-linux64.tar.gz
+  mkdir -p $HOME/.local/bin/
+  ln -s $PWD/nvim-linux64/bin/nvim $HOME/.local/bin/
+  ln -s $HOME/.local/bin/nvim $HOME/.local/bin/vim
+  ln -s $HOME/.local/bin/nvim $HOME/.local/bin/vi
+)
 
 function sym {
     src=$1
