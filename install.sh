@@ -46,10 +46,11 @@ function sym {
 sym $DOTFILES_DIR/inputrc $HOME/.inputrc
 sym $DOTFILES_DIR/zshrc $HOME/.zshrc
 sym $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
-sym $DOTFILES_DIR/vim $HOME/.vim
-sym $HOME/.vim/vimrc $HOME/.vimrc
+# sym $DOTFILES_DIR/vim $HOME/.vim
+# sym $HOME/.vim/vimrc $HOME/.vimrc
 mkdir -p $HOME/.config
-sym $HOME/.vim $HOME/.config/nvim
+#sym $HOME/.vim $HOME/.config/nvim
+sym $DOTFILES_DIR/lazyvim $HOME/.config/nvim
 
 # Other packages
 pip install --user neovim
