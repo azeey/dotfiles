@@ -11,7 +11,7 @@ echo "Setting up dotfiles"
 
 echo "Installing dependencies..."
 
-LIST_OF_APPS="xsel ripgrep fd-find curl"
+LIST_OF_APPS="xsel ripgrep fd-find curl fzf"
 
 # Add neovim ppa
 sudo apt-get update
@@ -49,6 +49,8 @@ sym $DOTFILES_DIR/zshrc $HOME/.zshrc
 sym $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
 # sym $DOTFILES_DIR/vim $HOME/.vim
 # sym $HOME/.vim/vimrc $HOME/.vimrc
+sym $DOTFILES_DIR/tmux $HOME/.tmux
+sym $DOTFILES_DIR/zshd $HOME/.zsh.d
 mkdir -p $HOME/.config
 #sym $HOME/.vim $HOME/.config/nvim
 sym $DOTFILES_DIR/lazyvim $HOME/.config/nvim
@@ -68,6 +70,6 @@ sudo chsh -s $(which zsh)
 # Update alternatives for neovim
 
 # Install Vundle bundles
-vim +PlugInstall +qa!
+# vim +PlugInstall +qa!
 
 echo "Finished setting up dev tools.  Restart/reload shells and text editors"
