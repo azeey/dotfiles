@@ -109,6 +109,7 @@ alias gc="git commit -v -s"
 alias gsw="git switch"
 alias lg="lazygit"
 alias lgb="lazygit branch"
+alias gd="git --no-pager diff"
 
 
 # Key Bindings
@@ -199,7 +200,8 @@ revgitpr() {
     fi
 
     #$HOME/code/neovim-diff/install/bin/nvim -c "PRReviewMode| DiffReview gh pr diff"
-    vim -c "PRReviewMode| DiffReview gh pr diff"
+    # vim -c "PRReviewMode| DiffReview gh pr diff"
+    vim -c "DiffReview gh pr diff"
 }
 
 revgitbranch() {
@@ -281,6 +283,13 @@ dv() {
   vi +"DiffviewOpen -uno $1"
 }
 
+dvpr() {
+  dv $(gh base-branch)...HEAD
+}
+dvbase() {
+  dv $(gh base-branch)
+}
+
 # Setup dv to use git branch completion
 # compdef "_git_cmd_update -r" dv
 #  _fzf_complete_dv() {
@@ -316,3 +325,9 @@ gz_last_release_version() {
 
 export LANG=${LANG:-"en_US.UTF-8"}
 export LC_ALL=${LC_ALL:-"en_US.UTF-8"}
+
+if command -v direnv &> /dev/null; then
+  eval "$(direnv hook zsh)"
+fi
+
+export PATH=$PATH:$HOME/.local/share/gem/ruby/3.2.0/bin

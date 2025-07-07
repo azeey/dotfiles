@@ -3,9 +3,9 @@ IndentWidth: 2
 ---
 Language: Cpp
 AccessModifierOffset : 0
-AllowShortIfStatementsOnASingleLine : false
-AlwaysBreakTemplateDeclarations : true
-AllowShortBlocksOnASingleLine : false
+AllowShortIfStatementsOnASingleLine : Never
+AlwaysBreakTemplateDeclarations : Yes
+AllowShortBlocksOnASingleLine : Never
 AllowShortFunctionsOnASingleLine : None
 Standard : c++17
 DerivePointerAlignment: false
@@ -13,11 +13,12 @@ PointerAlignment: Right
 NamespaceIndentation: None
 Cpp11BracedListStyle: true
 SpaceBeforeCpp11BracedList: false
-SortIncludes: true
+SortIncludes: CaseSensitive
 ColumnLimit: 80
 PenaltyBreakBeforeFirstCallParameter: 10
 CommentPragmas:  '^\\.+'
 BreakBeforeBraces: Custom
+IndentPPDirectives: BeforeHash
 BraceWrapping:
   AfterCaseLabel: true
   AfterClass: true

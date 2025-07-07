@@ -17,12 +17,9 @@ return {
   },
   {
     "nvim-neorg/neorg",
-    -- lazy-load on filetype
-    ft = "norg",
-    -- lazy = false,
-    build = ":Neorg sync-parsers",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    -- options for neorg. This will automatically call `require("neorg").setup(opts)`
+    lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+    version = "*", -- Pin Neorg to the latest stable release
+    config = true,
     opts = {
       load = {
         ["core.defaults"] = {},
@@ -37,6 +34,7 @@ return {
       'nvim-telescope/telescope.nvim',
       'nvim-tree/nvim-web-devicons',
     },
+    enabled = function() return vim.fn.executable('gh') == 1 end,
     opts = {
       mappings = {
         submit_win = {
@@ -60,4 +58,42 @@ return {
     }
   },
   {"tpope/vim-fugitive"},
+  {
+    "peterhoeg/vim-qml",
+  },
+  {"bergercookie/vim-deb-preview"},
+  {"godlygeek/tabular"},
+  {
+    "nvim-treesitter/nvim-treesitter",
+    ensure_installed = { 'c', 'python'},
+    opts = {
+      indent = {
+        enable = true
+      }
+    }
+  },
+  {"tpope/vim-abolish"},
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    opts = {
+      highlight = {
+        pattern = [[.*<(KEYWORDS)\s*]]
+      },
+      search = {
+        command = "rg",
+        args = {
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+        },
+        -- regex that will be used to match keywords.
+        -- don't replace the (KEYWORDS) placeholder
+        -- pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+        pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+      },
+    },
+  }
 }

@@ -14,3 +14,6 @@ vim.keymap.set('n','<leader>dt', "<cmd>:put =strftime('* %Y-%m-%d %H:%M')<CR>", 
 
 -- Enable formatting a selection
 vim.keymap.set("v", "<leader>cs", "<cmd>lua vim.lsp.buf.format()<CR><ESC>", { noremap = true, silent = true, desc = "Format selection only" })
+
+vim.keymap.set('n', '<leader>cw', '<cmd>lcd %:h <CR>', { desc = 'Set Files Location As local CWD'})
+vim.keymap.set('n', '<leader>cW', '<cmd>cd %:h <CR>', { desc = 'Set Files Location As global CWD'})

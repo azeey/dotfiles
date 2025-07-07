@@ -1,9 +1,9 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 # Which is equivalent to
 format = """
 $username\
 $shlvl\
-$singularity\
-$kubernetes\
 $directory\
 $vcsh\
 $git_branch\

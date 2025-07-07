@@ -11,3 +11,11 @@ gz
 env
 turtlebot
 Lidar
+vendored
+CMake
+buildfarm
+metapackage
+osrfoundation
+dartsim
+vcstool
+SDF

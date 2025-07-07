@@ -11,7 +11,9 @@ echo "Setting up dotfiles"
 
 echo "Installing dependencies..."
 
-LIST_OF_APPS="xsel ripgrep fd-find curl fzf"
+LIST_OF_APPS="xsel ripgrep fd-find curl "
+
+# TODO: Install fzf from source
 
 # Add neovim ppa
 sudo apt-get update
@@ -22,12 +24,12 @@ sudo apt-get install -y $LIST_OF_APPS; true
 mkdir -p $HOME/downloads
 (
   cd $HOME/downloads
-  curl -o nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
+  curl -o nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
   tar xzvf nvim-linux64.tar.gz
   mkdir -p $HOME/.local/bin/
-  ln -s $PWD/nvim-linux64/bin/nvim $HOME/.local/bin/
-  ln -s $HOME/.local/bin/nvim $HOME/.local/bin/vim
-  ln -s $HOME/.local/bin/nvim $HOME/.local/bin/vi
+  ln -sf $PWD/nvim-linux64/bin/nvim $HOME/.local/bin/
+  ln -sf $HOME/.local/bin/nvim $HOME/.local/bin/vim
+  ln -sf $HOME/.local/bin/nvim $HOME/.local/bin/vi
 )
 
 function sym {
