@@ -16,7 +16,7 @@ SpaceBeforeCpp11BracedList: false
 SortIncludes: CaseSensitive
 ColumnLimit: 80
 PenaltyBreakBeforeFirstCallParameter: 10
-CommentPragmas:  '^\\.+'
+# CommentPragmas:  '^\\.+'
 BreakBeforeBraces: Custom
 IndentPPDirectives: BeforeHash
 BraceWrapping:

@@ -1,6 +1,6 @@
 return {
-  {"vim-scripts/ReplaceWithRegister"},
-  {"preservim/vim-pencil"},
+  { "vim-scripts/ReplaceWithRegister" },
+  { "preservim/vim-pencil" },
   {
     "ruifm/gitlinker.nvim",
     event = "VeryLazy",
@@ -16,84 +16,101 @@ return {
     opts = {},
   },
   {
-    "nvim-neorg/neorg",
-    lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-    version = "*", -- Pin Neorg to the latest stable release
-    config = true,
-    opts = {
-      load = {
-        ["core.defaults"] = {},
-        ["core.concealer"] = {},
-      },
-    },
-  },
-  {
     "pwntester/octo.nvim",
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
     },
-    enabled = function() return vim.fn.executable('gh') == 1 end,
+    enabled = function()
+      return vim.fn.executable("gh") == 1
+    end,
     opts = {
       mappings = {
         submit_win = {
-            approve_review = { lhs = "<C-a>"},    -- approve review
-            comment_review = { lhs = "<C-t>"},     -- comment review, different from original because <c-m> is interpretted by terminal as <cr>
-            request_changes = { lhs = "<C-r>"},   -- request changes review
-            close_review_tab = { lhs = "<C-c>"},  -- close review tab
-          }
-      }
-    }
-
+          approve_review = { lhs = "<C-a>" }, -- approve review
+          comment_review = { lhs = "<C-t>" }, -- comment review, different from original because <c-m> is interpretted by terminal as <cr>
+          request_changes = { lhs = "<C-r>" }, -- request changes review
+          close_review_tab = { lhs = "<C-c>" }, -- close review tab
+        },
+      },
+    },
   },
   {
     "stevearc/conform.nvim", -- part of lazyvim
     opts = {
       formatters = {
-          prettier = {
-            prepend_args = { "--prose-wrap", "always" }
-          }
-        }
-    }
+        prettier = {
+          prepend_args = { "--prose-wrap", "always" },
+        },
+      },
+    },
   },
-  {"tpope/vim-fugitive"},
+  { "tpope/vim-fugitive" },
   {
     "peterhoeg/vim-qml",
   },
-  {"bergercookie/vim-deb-preview"},
-  {"godlygeek/tabular"},
+  { "bergercookie/vim-deb-preview" },
+  { "godlygeek/tabular" },
   {
     "nvim-treesitter/nvim-treesitter",
-    ensure_installed = { 'c', 'python'},
+    ensure_installed = { "c", "python" },
     opts = {
       indent = {
-        enable = true
-      }
-    }
+        enable = true,
+      },
+    },
   },
-  {"tpope/vim-abolish"},
+  { "tpope/vim-abolish" },
   {
     "folke/todo-comments.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
     opts = {
       highlight = {
-        pattern = [[.*<(KEYWORDS)\s*]]
+        pattern = [[.*<(KEYWORDS)\s*]],
+        keyword = "bg"
       },
       search = {
-        command = "rg",
-        args = {
-          "--color=never",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-        },
         -- regex that will be used to match keywords.
         -- don't replace the (KEYWORDS) placeholder
         -- pattern = [[\b(KEYWORDS):]], -- ripgrep regex
         pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
       },
     },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    opts = function(_, opts)
+      -- Ensure the cpp table exists
+      opts.linters_by_ft = opts.linters_by_ft or {}
+      opts.linters_by_ft.cpp = opts.linters_by_ft.cpp or {}
+      -- Add cpplint to the list of linters for C++ files
+      table.insert(opts.linters_by_ft.cpp, "cpplint")
+    end,
+  },
+  {
+    "danymat/neogen",
+    opts = function(_, opts)
+      local i = require("neogen.types.template").item
+      opts.languages = {
+        cpp = {
+          template = {
+            use_default_comment = false,
+            annotation_convention = "gz_doxygen",
+            gz_doxygen = {
+              { nil, "/// \\file", { no_results = true, type = { "file" } } },
+              { nil, "/// \\brief $1", { no_results = true, type = { "func", "file", "class" } } },
+
+              { i.ClassName, "/// \\class %s", { type = { "class" } } },
+              { i.Type, "/// \\typedef %s", { type = { "type" } } },
+              { nil, "/// \\brief $1", { type = { "func", "class", "type" } } },
+              { i.Tparam, "/// \\tparam %s $1" },
+              { i.Parameter, "/// \\param[in] %s $1" },
+              { i.Return, "/// \\return $1" },
+            }
+          }
+        }
+      }
+    end
   }
 }

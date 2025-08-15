@@ -16,12 +16,8 @@ else
     REVERSER='tac'
 fi
 
-FZFCOLCON_EXCLUDE_PATTERN=${FZFCOLCON_EXCLUDE_PATTERN:="\/.hg"}
 FZFCOLCON_EXTRA_OPTS=${FZFCOLCON_EXTRA_OPTS:=""}
 FZFCOLCON_UNIQUIFIER="awk '!seen[\$0]++'"
-
-FIND_PREFIX="find "
-FIND_POSTFIX=" -type d"
 
 __fzf_find_colcon_root_dir(){
   # Look for build/.built_by while crawling up each directory
@@ -61,7 +57,6 @@ __fzfcolcon() {
     REMOVE_FIRST="tail -n +2"
     LIMIT_LENGTH="head -n $(($FZFCOLCON_SUBDIR_LIMIT+1))"
 
-    SUBDIRS="{ $FIND_PREFIX $ROOTDIR/src $FIND_POSTFIX | $EXCLUDER }"
     PKGS=($(colcon --log-base /dev/null list -n --base-paths $ROOTDIR))
     COLCONDIRS=(build install)
     EXTRADIRS='{ print -l $ROOTDIR/${^COLCONDIRS}/${^PKGS} }'
@@ -84,7 +79,7 @@ __fzfcolcontargets() {
     COLCONTOPDIRS='{ print -l $ROOTDIR/${^TARGETDIRS} }'
     COLCONPKGDIRS='{ print -l $ROOTDIR/${^TARGETDIRS}/${^PKGS} }'
 
-    RECENTLY_USED_DIRS="{ z -l $ROOTDIR/ | $REVERSER | sed 's/^[[:digit:].]*[[:space:]]*//' }"
+    RECENTLY_USED_DIRS="{ zoxide query -l $ROOTDIR/ | $REVERSER | sed 's/^[[:digit:].]*[[:space:]]*//' }"
     FZF_COMMAND="fzf --height ${FZF_TMUX_HEIGHT:-40%} --tiebreak=end,index -m"
 
     local COMMAND="{ $COLCONTOPDIRS; $COLCONPKGDIRS; $RECENTLY_USED_DIRS; } | $FZFCOLCON_UNIQUIFIER | $FZF_COMMAND"

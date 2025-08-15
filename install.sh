@@ -23,11 +23,12 @@ sudo apt-get install -y $LIST_OF_APPS; true
 
 mkdir -p $HOME/downloads
 (
+  NVIM_DIR_NAME=nvim-linux64
   cd $HOME/downloads
-  curl -o nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
-  tar xzvf nvim-linux64.tar.gz
+  curl -o $NVIM_DIR_NAME.tar.gz -L https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
+  rm -rf $NVIM_DIR_NAME && mkdir $NVIM_DIR_NAME && (cd $NVIM_DIR_NAME && tar xzvf ../$NVIM_DIR_NAME.tar.gz --strip-components=1)
   mkdir -p $HOME/.local/bin/
-  ln -sf $PWD/nvim-linux64/bin/nvim $HOME/.local/bin/
+  ln -sf $PWD/$NVIM_DIR_NAME/bin/nvim $HOME/.local/bin/
   ln -sf $HOME/.local/bin/nvim $HOME/.local/bin/vim
   ln -sf $HOME/.local/bin/nvim $HOME/.local/bin/vi
 )

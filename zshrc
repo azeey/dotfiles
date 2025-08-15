@@ -24,7 +24,7 @@ antigen bundle git
 antigen bundle command-not-found
 antigen bundle vi-mode
 antigen bundle extract
-antigen bundle z
+# antigen bundle z
 antigen bundle history-substring-search
 antigen bundle debian
 antigen bundle common-aliases
@@ -38,7 +38,7 @@ antigen bundle zsh-users/zsh-completions
 # antigen theme spaceship-prompt/spaceship-prompt
 
 # fzf-z
-antigen bundle andrewferrier/fzf-z
+# antigen bundle andrewferrier/fzf-z
 antigen bundle ~/.zsh.d/fzf-colcon --no-local-clone
 
 # Tell antigen that you're done.
@@ -79,6 +79,7 @@ export LESS_TERMCAP_us=$green
 # # --------------------------------------------------------------------
 # # aliases
 # # --------------------------------------------------------------------
+alias ls='lsd'
 alias pylab='ipython --pylab --profile=pylab'
 alias pylab3='ipython3 --pylab --profile=pylab'
 alias g='gvim --remote-silent'
@@ -111,6 +112,8 @@ alias lg="lazygit"
 alias lgb="lazygit branch"
 alias gd="git --no-pager diff"
 
+alias nobs='NVIM_APPNAME="nvim_obsidian" nvim'
+
 
 # Key Bindings
 bindkey "^r" history-incremental-search-backward
@@ -136,7 +139,7 @@ if [ -x $HOME/code/catkin_ws/devel ]; then
     export ROS_WORKSPACE=$HOME/code/catkin_ws
 fi
 
-
+eval "$(zoxide init zsh)"
 
 # ccache
 export PATH=/usr/lib/ccache:$PATH
@@ -331,3 +334,13 @@ if command -v direnv &> /dev/null; then
 fi
 
 export PATH=$PATH:$HOME/.local/share/gem/ruby/3.2.0/bin
+
+
+bindkey '^G' zoxide_interactive_mode
+zoxide_interactive_mode() {
+  zle push-input
+  zle clear-screen
+  zi
+  zle reset-prompt
+}
+zle -N zoxide_interactive_mode
