@@ -1,5 +1,4 @@
 return {
-  { "vim-scripts/ReplaceWithRegister" },
   { "preservim/vim-pencil" },
   {
     "ruifm/gitlinker.nvim",
@@ -19,7 +18,7 @@ return {
     "pwntester/octo.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
+      "folke/snacks.nvim",
       "nvim-tree/nvim-web-devicons",
     },
     enabled = function()
@@ -64,10 +63,14 @@ return {
   { "tpope/vim-abolish" },
   {
     "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
     opts = {
+      -- keywords = {
+      --   TODO = {
+      --     alt = { "azeey"}
+      --   }
+      -- },
       highlight = {
-        pattern = [[.*<(KEYWORDS)\s*]],
+        pattern = {[[.*<(KEYWORDS):\s+]], [[.*<(KEYWORDS)\s*]]},
         keyword = "bg"
       },
       search = {
@@ -84,6 +87,12 @@ return {
       -- Ensure the cpp table exists
       opts.linters_by_ft = opts.linters_by_ft or {}
       opts.linters_by_ft.cpp = opts.linters_by_ft.cpp or {}
+      if vim.fn.executable("ament_cpplint") == 1 then
+        local cpplint = require('lint').linters.cpplint
+        cpplint.cmd = "ament_cpplint"
+        cpplint.args = {'--quiet'}
+      end
+
       -- Add cpplint to the list of linters for C++ files
       table.insert(opts.linters_by_ft.cpp, "cpplint")
     end,
@@ -112,5 +121,15 @@ return {
         }
       }
     end
+  },
+  {
+    "folke/flash.nvim",
+    enabled = false,
+  },
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+      -- add any options here
+    }
   }
 }

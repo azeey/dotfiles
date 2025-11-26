@@ -36,3 +36,19 @@ BraceWrapping:
   SplitEmptyFunction: true
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
+IncludeCategories:
+  - Regex:           '^<ext/.*\.h>'
+    Priority:        2
+    CaseSensitive:   false
+  - Regex:           '^<.*\.h>'
+    Priority:        1
+    CaseSensitive:   false
+  - Regex:           '^<[^.]*>'
+    Priority:        2
+    CaseSensitive:   false
+  - Regex:           '^<.*'
+    Priority:        3
+    CaseSensitive:   false
+  - Regex:           '.*'
+    Priority:        4
+    CaseSensitive:   false

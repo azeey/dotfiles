@@ -344,3 +344,4 @@ zoxide_interactive_mode() {
   zle reset-prompt
 }
 zle -N zoxide_interactive_mode
+export PATH="$HOME/.pixi/bin:$PATH"

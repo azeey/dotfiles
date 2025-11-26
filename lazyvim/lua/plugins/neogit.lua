@@ -6,7 +6,8 @@ return {
       "sindrets/diffview.nvim", -- optional - Diff integration
 
       -- Only one of these is needed, not both.
-      "ibhagwan/fzf-lua", -- optional
+      -- "ibhagwan/fzf-lua", -- optional
+      "folke/snacks.nvim",
     },
     opts = {
       graph_style = "kitty",

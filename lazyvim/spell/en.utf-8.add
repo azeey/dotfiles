@@ -19,3 +19,14 @@ osrfoundation
 dartsim
 vcstool
 SDF
+X11
+NVIDIA
+codeblock
+prereleases
+Zeromq
+Zenoh
+mutex
+WorldStatistics
+param
+EntityComponentManager
+ECM
