@@ -72,8 +72,10 @@ return {
         cpplint.args = {'--quiet'}
       end
 
-      -- Add cpplint to the list of linters for C++ files
-      table.insert(opts.linters_by_ft.cpp, "cpplint")
+      if vim.fn.executable("cpplint") == 1 then
+        -- Add cpplint to the list of linters for C++ files
+        table.insert(opts.linters_by_ft.cpp, "cpplint")
+      end
     end,
   },
   {
@@ -132,5 +134,4 @@ return {
       {"<localleader>k", "<cmd>lua require('hover').hover<cr>", desc="hover.nvim"}
     }
   }
-}
 }
