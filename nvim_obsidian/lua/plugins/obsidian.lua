@@ -3,18 +3,32 @@ return {
   version = "*", -- recommended, use latest release instead of latest commit
   lazy = false,
   ft = "markdown",
-  -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-  -- event = {
-  --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-  --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-  --   -- refer to `:h file-pattern` for more examples
-  --   "BufReadPre path/to/my-vault/*.md",
-  --   "BufNewFile path/to/my-vault/*.md",
-  -- },
+  cmd = "ObsidianWeeklies",
+  config = function(_, opts)
+    require("obsidian").setup(opts)
+
+    vim.api.nvim_create_user_command("ObsidianWeeklies", function()
+      local obsidian = require("obsidian")
+      local weekly_dir = Obsidian.dir / "notes" / "weekly"
+
+      local week_id = string.format("%s", os.date("%Y-%V"))
+
+      local note = obsidian.Note.create({
+        id = week_id,
+        dir = weekly_dir,
+        title = "Weekly " .. week_id,
+        template = "weekly_notes",
+        should_write = true,
+      })
+
+      obsidian.Note.open(note)
+    end, { desc = "Open current weekly note" })
+  end,
   dependencies = {
     -- Required.
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "MeanderingProgrammer/render-markdown.nvim",
   },
   opts = {
     workspaces = {

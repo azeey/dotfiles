@@ -12,8 +12,8 @@ vim.keymap.set("n", "<leader>dt", "<cmd>:put =strftime('* %Y-%m-%d %H:%M')<CR>",
   desc = "Put the current date and time on the next line",
 })
 
-vim.keymap.set("n", "<leader>dd", "<cmd>:put =strftime('%Y-%m-%d')<CR>", {
-  desc = "Put the current date on the next line",
+vim.keymap.set("n", "<leader>dd", "<cmd>:put =strftime('# %Y-%m-%d')<CR>", {
+  desc = "Put the current date on the next line as an h2 header",
 })
 
 -- Enable formatting a selection

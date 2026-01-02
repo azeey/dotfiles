@@ -15,27 +15,6 @@ return {
     opts = {},
   },
   {
-    "pwntester/octo.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "folke/snacks.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    enabled = function()
-      return vim.fn.executable("gh") == 1
-    end,
-    opts = {
-      mappings = {
-        submit_win = {
-          approve_review = { lhs = "<C-a>" }, -- approve review
-          comment_review = { lhs = "<C-t>" }, -- comment review, different from original because <c-m> is interpretted by terminal as <cr>
-          request_changes = { lhs = "<C-r>" }, -- request changes review
-          close_review_tab = { lhs = "<C-c>" }, -- close review tab
-        },
-      },
-    },
-  },
-  {
     "stevearc/conform.nvim", -- part of lazyvim
     opts = {
       formatters = {
@@ -131,5 +110,27 @@ return {
     opts = {
       -- add any options here
     }
+  },
+  {
+    "folke/snacks.nvim",
+    ---@type snacks.Config
+    opts = {
+      dashboard = {
+        enabled=false
+      }
+    }
+  }, 
+  {
+    "lewis6991/hover.nvim",
+    opts = {
+      init = function()
+        require("hover.providers.lsp")
+        require('hover.providers.gh')
+      end
+    },
+    keys = {
+      {"<localleader>k", "<cmd>lua require('hover').hover<cr>", desc="hover.nvim"}
+    }
   }
+}
 }

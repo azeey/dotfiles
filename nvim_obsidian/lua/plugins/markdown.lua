@@ -5,7 +5,7 @@ return {
     opts = {
       preset = "obsidian",
       heading = {
-        border = true,
+        -- border = true,
         border_virtual = true,
       },
     },

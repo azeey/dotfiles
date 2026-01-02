@@ -84,6 +84,8 @@ alias pylab='ipython --pylab --profile=pylab'
 alias pylab3='ipython3 --pylab --profile=pylab'
 alias g='gvim --remote-silent'
 
+alias vi="nvim"
+alias vim="nvim"
 alias trash=gvfs-trash
 alias v='vim -R -'
 alias agr='sudo apt-get upgrade'
@@ -116,7 +118,7 @@ alias nobs='NVIM_APPNAME="nvim_obsidian" nvim'
 
 
 # Key Bindings
-bindkey "^r" history-incremental-search-backward
+# bindkey "^r" history-incremental-search-backward
 
 xp() { tmux showb | xsel -i -b }
 
@@ -130,8 +132,6 @@ bindkey -M viins '\e.' insert-last-word
 
 #RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-export PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 
 # ROS
 if [ -x $HOME/code/catkin_ws/devel ]; then
@@ -164,7 +164,7 @@ wll(){
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_DEFAULT_COMMAND='fdfind'
+export FZF_DEFAULT_COMMAND='fd'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER='~~'
 
@@ -283,7 +283,7 @@ gencolconcompdb() {
 }
 
 dv() {
-  vi +"DiffviewOpen -uno $1"
+  nvim +"DiffviewOpen -uno $1"
 }
 
 dvpr() {
@@ -333,7 +333,7 @@ if command -v direnv &> /dev/null; then
   eval "$(direnv hook zsh)"
 fi
 
-export PATH=$PATH:$HOME/.local/share/gem/ruby/3.2.0/bin
+[ -d "/opt/homebrew/opt/ruby/bin" ] && export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 
 bindkey '^G' zoxide_interactive_mode
